@@ -1,3 +1,4 @@
+
 const {GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLSchema, GraphQLList} = require('graphql');
 const axios = require('axios');
 
@@ -67,62 +68,71 @@ const TimelineType = new GraphQLObjectType({
 
 //ROOT QUERY
 
-const StateRootQuery = new GraphQLObjectType({
-  name: 'StateRootQueryType',
+const RootQuery = new GraphQLObjectType({
+  name: 'RootQueryType',
   fields: {
-    states: {
+    state: {
       type: new GraphQLList(StatesType),
       resolve(parent, args) {
         return axios.get('https://disease.sh/v3/covid-19/states').then(
           res => res.data
-
         )
       }
     }
+    // countries: {
+    //   type: new GraphQLList(CountriesType),
+    //   resolve(parent, args) {
+    //     return axios.get('https://disease.sh/v3/covid-19/countries').then(
+    //       res => res.data
+    //
+    //     )
+    //   }
+    // }
+    // historical: {
+    //   type: new GraphQLList(HistoricalType),
+    //   resolve(parent, args) {
+    //     return axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all').then(
+    //       res => res.data
+    //
+    //     )
+    //   }
+    // }
   }
 })
 
-const CountriesRootQuery = new GraphQLObjectType({
-  name: 'CountriesRootQueryType',
-  fields: {
-    countries: {
-      type: new GraphQLList(CountriesType),
-      resolve(parent, args) {
-        return axios.get('https://disease.sh/v3/covid-19/countries').then(
-          res => res.data
-
-        )
-      }
-    }
-  }
-})
-
-
-const HistoricalRootQuery = new GraphQLObjectType({
-  name: 'HistoricalRootQueryType',
-  fields: {
-    states: {
-      type: new GraphQLList(HistoricalType),
-      resolve(parent, args) {
-        return axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all').then(
-          res => res.data
-
-        )
-      }
-    }
-  }
-})
+// const CountriesRootQuery = new GraphQLObjectType({
+//   name: 'CountriesRootQueryType',
+//   fields: {
+//     countries: {
+//       type: new GraphQLList(CountriesType),
+//       resolve(parent, args) {
+//         return axios.get('https://disease.sh/v3/covid-19/countries').then(
+//           res => res.data
+//
+//         )
+//       }
+//     }
+//   }
+// })
+//
+//
+// const HistoricalRootQuery = new GraphQLObjectType({
+//   name: 'HistoricalRootQueryType',
+//   fields: {
+//     historical: {
+//       type: new GraphQLList(HistoricalType),
+//       resolve(parent, args) {
+//         return axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all').then(
+//           res => res.data
+//
+//         )
+//       }
+//     }
+//   }
+// })
 
 
 
 module.exports = new GraphQLSchema({
-  query: StateRootQuery
-})
-
-module.exports = new GraphQLSchema({
-  query: CountriesRootQuery
-})
-
-module.exports = new GraphQLSchema({
-  query: HistoricalRootQuery
+  query: RootQuery
 })
