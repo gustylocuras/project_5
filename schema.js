@@ -1,6 +1,7 @@
 
-const {GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLSchema, GraphQLList} = require('graphql');
+const {GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLSchema, GraphQLList, GraphQLFloat, GraphQLNonNull} = require('graphql');
 const axios = require('axios');
+const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
 
 
 const StatesType = new GraphQLObjectType({
@@ -13,7 +14,7 @@ const StatesType = new GraphQLObjectType({
     todayDeaths: {type: GraphQLInt},
     active: {type: GraphQLInt},
     tests: {type: GraphQLInt},
-    testsPerOneMillion: {type: GraphQLInt}
+    testsPerOneMillion: {type: GraphQLFloat}
 
   })
 })
@@ -32,8 +33,8 @@ const CountriesType = new GraphQLObjectType({
     active: {type: GraphQLInt},
     critical: {type: GraphQLInt},
     tests: {type: GraphQLInt},
-    activePerOneMillion: {type: GraphQLInt},
-    recoveredPerOneMillion: {type: GraphQLInt}
+    activePerOneMillion: {type: GraphQLFloat},
+    recoveredPerOneMillion: {type: GraphQLFloat}
 
 
   })
@@ -42,13 +43,13 @@ const CountriesType = new GraphQLObjectType({
 const CountryInfoType = new GraphQLObjectType({
   name: 'countryInfo',
   fields: () => ({
-    lat: {type: GraphQLInt},
-    long: {type: GraphQLInt}
+    lat: {type: GraphQLFloat},
+    long: {type: GraphQLFloat}
   })
 })
 
 const HistoricalType = new GraphQLObjectType({
-  name: 'historical',
+  name: "historical" ,
   fields: () => ({
     country: {type: GraphQLString},
     timeline: {type: TimelineType}
@@ -58,11 +59,13 @@ const HistoricalType = new GraphQLObjectType({
 const TimelineType = new GraphQLObjectType({
   name: 'timeline',
   fields: ()=> ({
-    cases: {type: GraphQLString},
-    deaths: {type: GraphQLString},
-    recovered: {type: GraphQLString}
+    cases: {type: GraphQLJSONObject},
+    deaths: {type: GraphQLJSONObject},
+    recovered: {type: GraphQLJSONObject}
   })
 })
+
+
 
 
 
@@ -78,25 +81,25 @@ const RootQuery = new GraphQLObjectType({
           res => res.data
         )
       }
+    },
+    countries: {
+      type: new GraphQLList(CountriesType),
+      resolve(parent, args) {
+        return axios.get('https://disease.sh/v3/covid-19/countries').then(
+          res => res.data
+
+        )
+      }
+    },
+    historical: {
+      type: new GraphQLList(HistoricalType),
+      resolve(parent, args) {
+        return axios.get('https://disease.sh/v3/covid-19/historical?lastdays=all').then(
+          res => res.data
+
+        )
+      }
     }
-    // countries: {
-    //   type: new GraphQLList(CountriesType),
-    //   resolve(parent, args) {
-    //     return axios.get('https://disease.sh/v3/covid-19/countries').then(
-    //       res => res.data
-    //
-    //     )
-    //   }
-    // }
-    // historical: {
-    //   type: new GraphQLList(HistoricalType),
-    //   resolve(parent, args) {
-    //     return axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all').then(
-    //       res => res.data
-    //
-    //     )
-    //   }
-    // }
   }
 })
 
