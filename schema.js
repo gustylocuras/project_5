@@ -25,6 +25,7 @@ const CountriesType = new GraphQLObjectType({
   fields: () => ({
     country: {type: GraphQLString},
     countryInfo: {type: CountryInfoType},
+    cases: {type: GraphQLInt},
     todayCases: {type: GraphQLInt},
     deaths: {type: GraphQLInt},
     todayDeaths: {type: GraphQLInt},
