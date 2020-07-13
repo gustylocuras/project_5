@@ -86,9 +86,10 @@ const RootQuery = new GraphQLObjectType({
     countries: {
       type: new GraphQLList(CountriesType),
       resolve(parent, args) {
+        console.log("countries query");
         return axios.get('https://disease.sh/v3/covid-19/countries').then(
-          res => res.data
-
+          res => res.data,
+          error => "My error"
         )
       }
     },
