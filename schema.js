@@ -105,37 +105,6 @@ const RootQuery = new GraphQLObjectType({
   }
 })
 
-// const CountriesRootQuery = new GraphQLObjectType({
-//   name: 'CountriesRootQueryType',
-//   fields: {
-//     countries: {
-//       type: new GraphQLList(CountriesType),
-//       resolve(parent, args) {
-//         return axios.get('https://disease.sh/v3/covid-19/countries').then(
-//           res => res.data
-//
-//         )
-//       }
-//     }
-//   }
-// })
-//
-//
-// const HistoricalRootQuery = new GraphQLObjectType({
-//   name: 'HistoricalRootQueryType',
-//   fields: {
-//     historical: {
-//       type: new GraphQLList(HistoricalType),
-//       resolve(parent, args) {
-//         return axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=all').then(
-//           res => res.data
-//
-//         )
-//       }
-//     }
-//   }
-// })
-
 
 
 module.exports = new GraphQLSchema({
