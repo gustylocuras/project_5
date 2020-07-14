@@ -1,18 +1,13 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-
+import Map from './map'
 
 
 //Component Query
-
-
-//Component
 function Countries() {
 
-
-
-    const COUNTRIES_QUERY = gql`
+  const COUNTRIES_QUERY = gql`
     query countriesQuery {
       countries {
         country
@@ -29,6 +24,7 @@ function Countries() {
       return(
         <div>
           <h1>Countries</h1>
+          <Map data={data} />
           <h1>{data.countries[0].country}</h1>
 
 
