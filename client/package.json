@@ -15,7 +15,8 @@
     "graphql-tag": "^2.10.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "use-resize-observer": "^6.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

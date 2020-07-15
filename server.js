@@ -12,7 +12,7 @@ app.use(cors())
 
 app.use('/graphql', graphqlHTTP({
   schema,
-  graphiql: false
+  graphiql: true
 }))
 
 app.use(express.static('public'));
