@@ -37,7 +37,7 @@ function Map ({ geojson, property}) {
 
     // if (error) console.log(error); return `Error! ${error}`;
     console.log(data);
-
+    console.log(geojson);
 
   const { selectedCountry, setSelectedCountry } = useState({})
   const svgRef = useRef()
@@ -59,6 +59,8 @@ function Map ({ geojson, property}) {
       const projection = geoMercator()
 
       const pathGenerator = geoPath().projection(projection)
+
+
       svg
           .selectAll(".country")
           .data(geojson.features)
