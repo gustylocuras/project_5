@@ -46,8 +46,52 @@ function Spheres () {
     const countries = d
     console.log(countries);
 
+    const width = 1200
+    const height = 800;
+    const svg = d3.select("svg")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height);
+
+    const circleSize = { min: 10, max: 80 };
+
+
+    //create the domain
     const casesMinMax = d3.extent(countries, (d) => { return d.cases})
-    console.log(casesMinMax);
+    const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
+
+    //pass that to size and color
+    const circleRadiusScale = d3.scaleSqrt()
+                                .domain(casesMinMax)
+                                .range([circleSize.min, circleSize.max]);
+
+    const colorScale = d3.scaleLinear()
+                          .domain(deathsMinMax)
+                          .range(["#ccc", "red"])
+
+    const countriesCircles = _.map(countries, d=> {
+      const countryCircleSize = circleRadiusScale(d.cases)
+      const countryCircleColor = colorScale(d.deaths)
+
+      return {
+        countryCircleSize,
+        countryCircleColor
+      }
+    })
+
+
+
+
+    console.log(countriesCircles);
+
+
+
+    // cirles = svg.selectAll("circle")
+    //             .data(countries)
+    //             .enter()
+    //             .append("circle")
+    //             .attr("r", d => circleRadiusScale(d.cases))
+
 }
      return(
       <div>
