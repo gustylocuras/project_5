@@ -36,10 +36,10 @@ function Map ({ geojson, property}) {
 
 
     // if (error) console.log(error); return `Error! ${error}`;
-    console.log(data);
-    console.log(geojson);
+  
+//=========================================================================================
 
-  const { selectedCountry, setSelectedCountry } = useState({})
+
   const svgRef = useRef()
   const wrapperRef = useRef()
   const dimensions = useResizeObserver(wrapperRef)
@@ -52,7 +52,7 @@ function Map ({ geojson, property}) {
       const colorScale = scaleLinear()
                           .domain([minProp, maxProp])
                           .range(["#ccc", "red"])
-      console.log(minProp, maxProp);
+
       const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect()
 
 

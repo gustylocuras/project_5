@@ -1,7 +1,8 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-
+import _ from 'lodash';
+import * as d3 from "d3";
 
 
 function Spheres () {
@@ -10,10 +11,6 @@ function Spheres () {
     query countriesQuery {
       countries {
         country
-        countryInfo{
-          lat
-          long
-        }
         cases
         todayCases
         deaths
@@ -23,19 +20,40 @@ function Spheres () {
         active
         critical
         tests
-        activePerOneMillion
-        recoveredPerOneMillion
 
       }
     }
 
     `;
     const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
+    let d;
 
-    if(loading) return "loading"
+    // data = _.values(data)
+    if(data){
+      d = data.countries
+
+
     // if (error) console.log(error); return `Error! ${error}`;
-    if(data) return(
-      <div>{data.countries[0].deaths}</div>
+    //=====================================================================================
+
+     // React.useEffect(() => {
+     //    setD(data.countries)
+     //    return
+     //   })
+
+
+    //
+    const countries = d
+    console.log(countries);
+
+    const casesMinMax = d3.extent(countries, (d) => { return d.cases})
+    console.log(casesMinMax);
+}
+     return(
+      <div>
+
+      <svg></svg>
+      </div>
     )
 }
 

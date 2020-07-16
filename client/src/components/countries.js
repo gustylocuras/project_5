@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // import gql from 'graphql-tag';
 import Map from './map'
 import geojson from './custom.json'
-
+import Spheres from './spheres'
 
 
 //Component Query
@@ -22,7 +22,7 @@ const [property, setProperty] = useState("pop_est")
             <option value="dgp_md_est">GDP</option>
             <option value="cases">cases</option>
           </select>
-
+          <Spheres />
 
         </div>
       )

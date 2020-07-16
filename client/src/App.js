@@ -1,5 +1,5 @@
 import React from 'react';
-import Spheres from './components/spheres'
+// import Spheres from './components/spheres'
 import Countries from './components/countries'
 
 
@@ -12,7 +12,7 @@ class App extends React.Component {
         <Countries>
 
          </Countries>
-         <Spheres />
+
 
       </div>
     )
