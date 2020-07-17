@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-
+import Spheres from './spheres'
 
 function Query(){
   const COUNTRIES_QUERY = gql`
@@ -32,7 +32,22 @@ function Query(){
 
     if (loading) return 'Loading...';
     // if (error) console.log(error); return `Error! ${error}`;
-    if(data) return data
+    if(data) console.log(data);
+
+return(
+  <React.Fragment>
+    <Spheres data={data} />
+
+
+
+
+
+  </React.Fragment>
+)
+
 }
+
+
+
 
 export default Query;
