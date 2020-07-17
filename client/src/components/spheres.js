@@ -44,7 +44,7 @@ class Spheres extends Component {
 
 
 
-    console.log(countryCircleColor,countryCircleCy );
+    
   }
 //     const countries = d
 ///     //create the domain
