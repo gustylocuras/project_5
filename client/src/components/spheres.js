@@ -5,6 +5,7 @@ import * as d3 from "d3";
 
 const width = 960
 const height = 500
+const forceStrength = 0.05
 const margin = {top: 20, right:10, bottom: 20, left: 35}
 const circleSize = { min: 10, max: 80 };
 
@@ -19,7 +20,9 @@ class Spheres extends Component {
 
   colorScale = d3.scaleLinear().range(["#ccc", "red"])
 
-  
+
+
+
   componentDidMount(){
     const { countries } = this.state
     console.log(countries);
@@ -39,37 +42,36 @@ class Spheres extends Component {
         color: countryCircleColor
       }
     })
-    this.setState({circles})
+this.setState({circles})
 
 }
-//     const countries = d
-///     //create the domain
+
+componentDidUpdate(){
+  const force = d3.forceSimulation()
+            .nodes(this.state.circles)
+            .force("x", d3.forceX(width / 2))
+            .force("y", d3.forceY(height / 2))
+            .force("collide", d3.forceCollide(forceCollide).alphaTarget(0.5))
+            .on("tick", () => this.state.circles)
+}
 
 
-
-//
-//     const countriesCircles =    d3.selectAll("circle")
-//                                 .data(countriesCirclesData)
-//                                 .enter()
-//                                 .append('circle')
-//                                 .attr("d", d => countriesCirclesData)
-//                                 .attr("cx", d => d.countryCircleCx)
-//                                 .attr("cy", d => d.countryCircleCy)
-//                                 .attr("r", d => d.countryCircleRadius)
-//                                 .attr("fill", d => d.countryCircleColor)
-// // d3.select('svg').append('g')
-//
-// console.log(countriesCircles.data(countriesCirclesData));
-
+// componentWillUnmount(){
+//   this.force().stop();
+// }
 
   render() {
 
-    console.log(this.state.countries[0])
+
     return(
       <div>
         <svg width={width} height={height}>
           {
-            this.state.circles.map(d=> (<circle r={d.r} fill={d.color}/>))
+            this.state.circles.map(d=> (<circle
+                                        transform={`translate(150, 150)`}
+                                        r={d.r}
+                                        fill={d.color}
+                                        />))
           }
         </svg>
      </div>
