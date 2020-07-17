@@ -11,41 +11,37 @@ const circleSize = { min: 10, max: 80 };
 class Spheres extends Component {
 
   state = {
-    countries:[]
+    countries:this.props.data.countries,
+    circles: []
   };
 
+  circleRadiusScale = d3.scaleSqrt().range([circleSize.min, circleSize.max]);
 
+  colorScale = d3.scaleLinear().range(["#ccc", "red"])
 
+  
   componentDidMount(){
-    this.setState({
-      countries: this.props.data.countries
-    })
-  }
-  componentDidUpdate(){
     const { countries } = this.state
     console.log(countries);
     const casesMinMax = d3.extent(countries, (d) => { return d.cases})
     const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
     console.log(deathsMinMax, casesMinMax);
 
-    //     //pass that to size and color
-    const circleRadiusScale = d3.scaleSqrt()
-                                  .domain(casesMinMax)
-                                  .range([circleSize.min, circleSize.max]);
+    //update scales with domain
+    this.circleRadiusScale.domain(casesMinMax)
+    this.colorScale.domain(deathsMinMax)
 
-    const colorScale = d3.scaleLinear()
-                            .domain(deathsMinMax)
-                            .range(["#ccc", "red"])
+    const circles = countries.map((d) => {
+      const countryCircleRadius = this.circleRadiusScale(d.cases)
+      const countryCircleColor = this.colorScale(d.deaths)
+      return {
+        r: countryCircleRadius,
+        color: countryCircleColor
+      }
+    })
+    this.setState({circles})
 
-    const countryCircleRadius = circleRadiusScale(d.cases)
-    const countryCircleColor = colorScale(d.deaths)
-    const countryCircleCx = circleRadiusScale(d.cases)
-    const countryCircleCy = circleRadiusScale(d.cases)
-
-
-
-    
-  }
+}
 //     const countries = d
 ///     //create the domain
 
@@ -71,8 +67,12 @@ class Spheres extends Component {
     console.log(this.state.countries[0])
     return(
       <div>
-                 <svg width={width} height={height}/>
-               </div>
+        <svg width={width} height={height}>
+          {
+            this.state.circles.map(d=> (<circle r={d.r} fill={d.color}/>))
+          }
+        </svg>
+     </div>
 
     )
 
