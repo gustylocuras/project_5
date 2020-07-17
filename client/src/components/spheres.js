@@ -1,26 +1,18 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
-import _ from 'lodash';
 import * as d3 from "d3";
 
 
 function Spheres () {
-
+  const width = 1200
+  const height = 800;
   const COUNTRIES_QUERY = gql`
     query countriesQuery {
       countries {
         country
         cases
-        todayCases
         deaths
-        todayDeaths
-        recovered
-        todayRecovered
-        active
-        critical
-        tests
-
       }
     }
 
@@ -44,14 +36,13 @@ function Spheres () {
 
     //
     const countries = d
-    console.log(countries);
 
-    const width = 1200
-    const height = 800;
-    const svg = d3.select("svg")
-                  .append("svg")
-                  .attr("width", width)
-                  .attr("height", height);
+
+
+    // const svg = d3.select("svg")
+    //               .append("svg")
+    //               .attr("width", width)
+    //               .attr("height", height);
 
     const circleSize = { min: 10, max: 80 };
 
@@ -69,34 +60,37 @@ function Spheres () {
                           .domain(deathsMinMax)
                           .range(["#ccc", "red"])
 
-    const countriesCircles = _.map(countries, d=> {
-      const countryCircleSize = circleRadiusScale(d.cases)
+    const countriesCirclesData = countries.map((d) => {
+      const countryCircleRadius = circleRadiusScale(d.cases)
       const countryCircleColor = colorScale(d.deaths)
-
-      return {
-        countryCircleSize,
-        countryCircleColor
-      }
+      const countryCircleCx = circleRadiusScale(d.cases)
+      const countryCircleCy = circleRadiusScale(d.cases)
+      return [countryCircleRadius, countryCircleCx, countryCircleCy, countryCircleColor]
     })
 
+    console.log(countriesCirclesData);
 
+    const countriesCircles =    d3.selectAll("circle")
+                                .data(countriesCirclesData)
+                                .enter()
+                                .append('circle')
+                                .attr("d", d => countriesCirclesData)
+                                .attr("cx", d => d.countryCircleCx)
+                                .attr("cy", d => d.countryCircleCy)
+                                .attr("r", d => d.countryCircleRadius)
+                                .attr("fill", d => d.countryCircleColor)
+// d3.select('svg').append('g')
 
+console.log(countriesCircles.data(countriesCirclesData));
 
-    console.log(countriesCircles);
-
-
-
-    // cirles = svg.selectAll("circle")
-    //             .data(countries)
-    //             .enter()
-    //             .append("circle")
-    //             .attr("r", d => circleRadiusScale(d.cases))
 
 }
      return(
       <div>
 
-      <svg></svg>
+      <svg width={width} height={height}>
+      <circle />
+      </svg>
       </div>
     )
 }
