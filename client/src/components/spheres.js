@@ -20,7 +20,16 @@ class Spheres extends Component {
 
   colorScale = d3.scaleLinear().range(["#ccc", "red"])
 
+componentDidUpdate(){
 
+  console.log(this.refs.circles);
+  // const force = d3.forceSimulation()
+  //           .nodes(this.refs.circle)
+  //           .force("x", d3.forceX(width / 2))
+  //           .force("y", d3.forceY(height / 2))
+  //           .force("charge", d3.forceManyBody().strength(forceStrength))
+  //           .on("tick", () => this.setState({circles}))
+}
 
 
   componentDidMount(){
@@ -46,14 +55,7 @@ this.setState({circles})
 
 }
 
-componentDidUpdate(){
-  const force = d3.forceSimulation()
-            .nodes(this.state.circles)
-            .force("x", d3.forceX(width / 2))
-            .force("y", d3.forceY(height / 2))
-            .force("collide", d3.forceCollide(forceCollide).alphaTarget(0.5))
-            .on("tick", () => this.state.circles)
-}
+
 
 
 // componentWillUnmount(){
@@ -67,7 +69,8 @@ componentDidUpdate(){
       <div>
         <svg width={width} height={height}>
           {
-            this.state.circles.map(d=> (<circle
+            this.state.circles.map((d, key) => (<circle key={key}
+                                        ref={circles => this.state.circles = circles}
                                         transform={`translate(150, 150)`}
                                         r={d.r}
                                         fill={d.color}
