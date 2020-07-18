@@ -69,7 +69,7 @@ class Spheres extends Component {
                     .force("x", d3.forceX(0));
 
                     const dragStart = d => {
-                      if (!d3.event.active) force.alphaTarget(0.3).restart();
+                      if (!d3.event.active) force.alphaTarget(0.05).restart();
                       d.fx = d.x;
                       d.fy = d.y;
                     };
@@ -78,11 +78,11 @@ class Spheres extends Component {
                       d.fy = d3.event.y;
                     };
                     const dragEnd = d => {
-                      if (!d3.event.active) force.alphaTarget(0);
+                      if (!d3.event.active) force.alphaTarget(0.3);
                       d.fx = null;
                       d.fy = null;
                     }
-                    const circles = d3.select('.chartContainer')
+                    const circles = d3.select('.chart')
                         .selectAll('circle')
                         .data(countries).enter()
                         .append('circle')
@@ -105,7 +105,6 @@ class Spheres extends Component {
 
                     const ticked = () => {
                       circles
-                      console.log(d.y, d.x);
                       .attr("cx", function(d) { return d.x; })
                       .attr("cy", function(d) { return d.y; })
 
@@ -145,7 +144,7 @@ class Spheres extends Component {
       <div className='container'>
         <h1>Graph</h1>
         <div className='chartContainer'>
-          <svg  className='chart'>
+          <svg className='chart'>
           </svg>
         </div>
       </div>
