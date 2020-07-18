@@ -4,11 +4,11 @@ import gql from 'graphql-tag';
 import * as d3 from "d3";
 
 const width = 960
-const height = 500
+const height = 600
 const forceStrength = 0.05
 
 const margin = {top: 20, right:10, bottom: 20, left: 35}
-const circleSize = { min: 10, max: 80 };
+const circleSize = { min: 6, max: 80 };
 
 class Spheres extends Component {
 
@@ -20,10 +20,6 @@ class Spheres extends Component {
   circleRadiusScale = d3.scaleSqrt().range([circleSize.min, circleSize.max]);
 
   colorScale = d3.scaleLinear().range(["#ccc", "red"])
-
-
-
-
 
 
             // .nodes(this.state.circles)
@@ -41,7 +37,7 @@ class Spheres extends Component {
 
 
   componentDidMount(){
-    const { countries } = this.state
+    let { countries } = this.state
 
     const casesMinMax = d3.extent(countries, (d) => { return d.cases})
     const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
@@ -62,14 +58,18 @@ class Spheres extends Component {
             .html('Tooltip');
 
     const force = d3.forceSimulation()
-                    .force("charge", d3.forceManyBody())
-                    .force('collide', d3.forceCollide())
-                    .force('center', d3.forceCenter(width / 2, height / 2))
-                    .force("y", d3.forceY(0))
-                    .force("x", d3.forceX(0));
+                    .force("charge", d3.forceManyBody().strength(-25))
 
+                    .force('center', d3.forceCenter(width / 2, height / 2))
+                    .force("y", d3.forceY(.8))
+                    .force("x", d3.forceX(.8))
+
+
+                    // countries = countries.sort((a, b) =>
+                    //   b.cases - a.cases
+                    // )
                     const dragStart = d => {
-                      if (!d3.event.active) force.alphaTarget(0.05).restart();
+                      if (!d3.event.active) force.alphaTarget(.5).restart();
                       d.fx = d.x;
                       d.fy = d.y;
                     };
@@ -78,7 +78,7 @@ class Spheres extends Component {
                       d.fy = d3.event.y;
                     };
                     const dragEnd = d => {
-                      if (!d3.event.active) force.alphaTarget(0.3);
+                      if (!d3.event.active) force.alphaTarget(0.5);
                       d.fx = null;
                       d.fy = null;
                     }
@@ -105,15 +105,18 @@ class Spheres extends Component {
 
                     const ticked = () => {
                       circles
-                      .attr("cx", function(d) { return d.x; })
-                      .attr("cy", function(d) { return d.y; })
+                      .attr("cx", function(d) { return d.x ; })
+                      .attr("cy", function(d) { return d.y ; })
 
                         };
 
 
                     //Starting simulation
                       force.nodes(countries)
-                        .on('tick', ticked);
+                      .force('collide', d3.forceCollide().strength(0.5).radius(d => d.r + 3.5).iterations(1))
+                        .on('tick', ticked)
+
+
                     // = countries.map((d) => {
                     //   const countryCircleRadius = this.circleRadiusScale(d.cases)
                     //   const countryCircleColor = this.colorScale(d.deaths)
