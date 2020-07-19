@@ -63,15 +63,15 @@ class Spheres extends Component {
 
 
                     .force('center', d3.forceCenter(width / 2, height / 2))
-                    .force("y", d3.forceY(.8))
-                    .force("x", d3.forceX(.8))
+                    .force("y", d3.forceY())
+                    .force("x", d3.forceX())
 
 
                     // countries = countries.sort((a, b) =>
                     //   b.cases - a.cases
                     // )
                     const dragStart = d => {
-                      if (!d3.event.active) force.alphaTarget(.5).restart();
+                      if (!d3.event.active) force.alphaTarget(1).restart()
                       d.fx = d.x;
                       d.fy = d.y;
                     };
@@ -80,7 +80,7 @@ class Spheres extends Component {
                       d.fy = d3.event.y;
                     };
                     const dragEnd = d => {
-                      if (!d3.event.active) force.alphaTarget(0.5);
+                      if (!d3.event.active) force.alphaTarget(0.8);
                       d.fx = null;
                       d.fy = null;
                     }
@@ -118,7 +118,7 @@ class Spheres extends Component {
                         .force("charge", d3.forceManyBody().strength((d) => {
                           return -Math.pow(this.circleRadiusScale(d.cases), 2) * forceStrength;
                         }))
-                      .force('collide', d3.forceCollide().strength(0.5).radius(d => d.r + 3.5).iterations(1))
+                      .force('collide', d3.forceCollide().strength(0.5).iterations(5))
                         .on('tick', ticked)
 
 
