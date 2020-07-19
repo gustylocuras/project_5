@@ -5,7 +5,7 @@ import * as d3 from "d3";
 
 const width = 960
 const height = 600
-const forceStrength = 0.05
+const forceStrength = 0.12
 
 const margin = {top: 20, right:10, bottom: 20, left: 35}
 const circleSize = { min: 6, max: 80 };
@@ -57,8 +57,10 @@ class Spheres extends Component {
             .attr('class', 'tooltip')
             .html('Tooltip');
 
+
+
     const force = d3.forceSimulation()
-                    .force("charge", d3.forceManyBody().strength(-25))
+
 
                     .force('center', d3.forceCenter(width / 2, height / 2))
                     .force("y", d3.forceY(.8))
@@ -113,6 +115,9 @@ class Spheres extends Component {
 
                     //Starting simulation
                       force.nodes(countries)
+                        .force("charge", d3.forceManyBody().strength((d) => {
+                          return -Math.pow(this.circleRadiusScale(d.cases), 2) * forceStrength;
+                        }))
                       .force('collide', d3.forceCollide().strength(0.5).radius(d => d.r + 3.5).iterations(1))
                         .on('tick', ticked)
 
