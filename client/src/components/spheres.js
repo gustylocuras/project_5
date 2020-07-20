@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
 import * as d3 from "d3";
 
-const width = 960
-const height = 600
+const width = 550
+const height = 550
 const forceStrength = 0.12
 
-const margin = {top: 20, right:10, bottom: 20, left: 35}
+
 const circleSize = { min: 6, max: 80 };
 
 class Spheres extends Component {
@@ -52,16 +50,13 @@ class Spheres extends Component {
         .attr('height', height);
 
         //Creating tooltip
-          const tooltip = d3.select('.container')
-            .append('div')
-            .attr('class', 'tooltip')
-            .html('Tooltip');
+
+
+
 
 
 
     const force = d3.forceSimulation()
-
-
                     .force('center', d3.forceCenter(width / 2, height / 2))
                     .force("y", d3.forceY())
                     .force("x", d3.forceX())
@@ -84,6 +79,16 @@ class Spheres extends Component {
                       d.fx = null;
                       d.fy = null;
                     }
+
+                    const showInfo = d => {
+                      d3.select(".title").html(d.country)
+                      d3.select(".cases").html("Cases: " + d.cases)
+                      d3.select(".deaths").html("Deaths: " + d.deaths)
+                      d3.select(".todayCases").html("Today's Cases: " + d.todayCases)
+                      d3.select(".todayDeaths").html("Today's Deaths: " + d.todayDeaths)
+                      d3.select(".tests").html("Tests: " + d.tests)
+
+                    }
                     const circles = d3.select('.chart')
                         .selectAll('circle')
                         .data(countries).enter()
@@ -94,16 +99,8 @@ class Spheres extends Component {
                          .on('start', dragStart)
                          .on('drag', drag)
                          .on('end', dragEnd))
-                         .on('mouseover',d => {
-                          tooltip.html(d.country)
-                            .style('left', d3.event.pageX + 5 +'px')
-                            .style('top', d3.event.pageY + 5 + 'px')
-                            .style('opacity', .9);
-                        }).on('mouseout', () => {
-                          tooltip.style('opacity', 0)
-                            .style('left', '0px')
-                            .style('top', '0px');
-                        });
+                         .on('mouseover',showInfo)
+
 
                     const ticked = () => {
                       circles
@@ -154,7 +151,16 @@ class Spheres extends Component {
         <div className='chartContainer'>
           <svg className='chart'>
           </svg>
+          <div className="tooltip">
+            <h1 className="title">Country name</h1>
+            <h3 className="cases">Cases</h3>
+            <h3 className="deaths">Deaths</h3>
+            <h3 className="todayCases">Today's cases</h3>
+            <h3 className="todayDeaths">Today's deaths</h3>
+            <h3 className="tests">Tests</h3>
+          </div>
         </div>
+
       </div>
 
     )

@@ -1,71 +1,31 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3';
-import useResizeObserver from 'use-resize-observer';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import React, {  useEffect } from 'react';
+import * as d3 from 'd3';
+
 
 
 
 function Map ({ geojson, property}) {
 
-  const COUNTRIES_QUERY = gql`
-    query countriesQuery {
-      countries {
-        country
-        countryInfo{
-          lat
-          long
-        }
-        cases
-        todayCases
-        deaths
-        todayDeaths
-        recovered
-        todayRecovered
-        active
-        critical
-        tests
-        activePerOneMillion
-        recoveredPerOneMillion
-
-      }
-    }
-
-    `;
-    const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
-
-
-    // if (error) console.log(error); return `Error! ${error}`;
-  
-//=========================================================================================
-
-
-  const svgRef = useRef()
-  const wrapperRef = useRef()
-  const dimensions = useResizeObserver(wrapperRef)
 
 
   useEffect( () => {
-      const svg = select(svgRef.current)
-      const minProp = min(geojson.features, (feature) => feature.properties[property])
-      const maxProp = max(geojson.features, (feature) => feature.properties[property])
-      const colorScale = scaleLinear()
+      const svg = d3.select('svg')
+      const minProp = d3.min(geojson.features, (feature) => feature.properties[property])
+      const maxProp = d3.max(geojson.features, (feature) => feature.properties[property])
+      const colorScale = d3.scaleLinear()
                           .domain([minProp, maxProp])
                           .range(["#ccc", "red"])
 
-      const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect()
 
+      const projection = d3.geoMercator()
 
-      const projection = geoMercator()
-
-      const pathGenerator = geoPath().projection(projection)
+      const pathGenerator = d3.geoPath().projection(projection)
 
 
       svg
           .selectAll(".country")
           .data(geojson.features)
           .join("path")
-          // .on("click", feature => setSelectedCountry(feature))
           .attr("class", "country")
           .transition()
           .attr("fill", feature => colorScale(feature.properties[property]))
@@ -73,13 +33,13 @@ function Map ({ geojson, property}) {
 
 
 
-    }, [geojson, dimensions, property]);
+    }, [geojson,  property]);
 
 
 
       return(
-          <div ref={wrapperRef}>
-            <svg ref={svgRef} style={{height: "500px", width: "960px"}} ></svg>
+          <div>
+            <svg style={{height: "500px", width: "960px"}} ></svg>
 
           </div>
         )

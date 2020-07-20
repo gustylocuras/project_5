@@ -15,12 +15,11 @@ const [property, setProperty] = useState("pop_est")
         <div>
 
           <h1>Countries</h1>
-          <Map  geojson={geojson} property={property} />
+          <Map geojson={geojson} property={property} />
           <select value={property} onChange={event => setProperty(event.target.value)}>
             <option value="pop_est">Population</option>
             <option value="name_len">name length</option>
             <option value="dgp_md_est">GDP</option>
-            <option value="cases">cases</option>
           </select>
 
 
