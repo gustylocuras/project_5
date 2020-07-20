@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import * as d3 from "d3";
 
-const width = 550
+const width = 580
 const height = 550
 const forceStrength = 0.12
 
@@ -17,8 +17,8 @@ class Spheres extends Component {
 
   circleRadiusScale = d3.scaleSqrt().range([circleSize.min, circleSize.max]);
 
-  colorScale = d3.scaleLinear().range(["#ccc", "red"])
-
+  
+  colorScale = d3.scaleSequential(d3.interpolateReds)
 
             // .nodes(this.state.circles)
             // .force("x", d3.forceX(width / 2))
@@ -31,8 +31,6 @@ class Spheres extends Component {
             //   })
             // })
             // this.setState({circles: circles})
-
-
 
   componentDidMount(){
     let { countries } = this.state
@@ -49,11 +47,6 @@ class Spheres extends Component {
         .attr('width', width)
         .attr('height', height);
 
-        //Creating tooltip
-
-
-
-
 
 
     const force = d3.forceSimulation()
@@ -62,9 +55,9 @@ class Spheres extends Component {
                     .force("x", d3.forceX())
 
 
-                    // countries = countries.sort((a, b) =>
-                    //   b.cases - a.cases
-                    // )
+                    countries = countries.sort((a, b) =>
+                      b.cases - a.cases
+                    )
                     const dragStart = d => {
                       if (!d3.event.active) force.alphaTarget(1).restart()
                       d.fx = d.x;
@@ -95,6 +88,7 @@ class Spheres extends Component {
                         .append('circle')
                         .attr("r", d => { return this.circleRadiusScale(d.cases)})
                         .attr("fill", d => { return this.colorScale(d.deaths)})
+                        .attr("stroke", "red" )
                         .call(d3.drag()
                          .on('start', dragStart)
                          .on('drag', drag)
@@ -127,37 +121,27 @@ class Spheres extends Component {
                     //     color: countryCircleColor
                     //   }
                     // })
-
-
-
-
-
-
 }
 
-
-
-
-// componentWillUnmount(){
-//   this.force().stop();
-// }
 
   render() {
 
 
     return(
       <div className='container'>
-        <h1>Graph</h1>
         <div className='chartContainer'>
           <svg className='chart'>
           </svg>
           <div className="tooltip">
             <h1 className="title">Country name</h1>
+            <div className="data">
             <h3 className="cases">Cases</h3>
             <h3 className="deaths">Deaths</h3>
             <h3 className="todayCases">Today's cases</h3>
             <h3 className="todayDeaths">Today's deaths</h3>
             <h3 className="tests">Tests</h3>
+            </div>
+
           </div>
         </div>
 

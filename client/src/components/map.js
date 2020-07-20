@@ -8,7 +8,7 @@ function Map ({ geojson, property}) {
 
 
 
-  useEffect( () => {
+  useEffect(() => {
       const svg = d3.select('svg')
       const minProp = d3.min(geojson.features, (feature) => feature.properties[property])
       const maxProp = d3.max(geojson.features, (feature) => feature.properties[property])
@@ -38,8 +38,8 @@ function Map ({ geojson, property}) {
 
 
       return(
-          <div>
-            <svg style={{height: "500px", width: "960px"}} ></svg>
+          <div className="map">
+            <svg className="svg-map" style={{height: "500px", width: "960px"}} ></svg>
 
           </div>
         )

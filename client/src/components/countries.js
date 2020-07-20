@@ -12,17 +12,13 @@ function Countries() {
 const [property, setProperty] = useState("pop_est")
 
       return(
-        <div>
-
-          <h1>Countries</h1>
-          <Map geojson={geojson} property={property} />
-          <select value={property} onChange={event => setProperty(event.target.value)}>
-            <option value="pop_est">Population</option>
-            <option value="name_len">name length</option>
-            <option value="dgp_md_est">GDP</option>
+        <div className="map">
+          <Map  geojson={geojson} property={property} />
+            <select value={property} onChange={event => setProperty(event.target.value)}>
+              <option value="pop_est">Population</option>
+              <option value="name_len">name length</option>
+              <option value="gdp_md_est">GDP</option>
           </select>
-
-
         </div>
       )
 
