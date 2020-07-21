@@ -17,7 +17,7 @@ class Spheres extends Component {
 
   circleRadiusScale = d3.scaleSqrt().range([circleSize.min, circleSize.max]);
 
-  
+
   colorScale = d3.scaleSequential(d3.interpolateReds)
 
             // .nodes(this.state.circles)
@@ -73,6 +73,17 @@ class Spheres extends Component {
                       d.fy = null;
                     }
 
+                    function zoomed(d) {
+                      d3.select('div').attr("class", "new")
+                        .data(countries).enter()
+                        .html(d.country)
+
+                        circles.attr("transform", d3.event.transform)
+                                .append('g')
+
+
+                      }
+
                     const showInfo = d => {
                       d3.select(".title").html(d.country)
                       d3.select(".cases").html("Cases: " + d.cases)
@@ -82,6 +93,8 @@ class Spheres extends Component {
                       d3.select(".tests").html("Tests: " + d.tests)
 
                     }
+
+
                     const circles = d3.select('.chart')
                         .selectAll('circle')
                         .data(countries).enter()
@@ -94,6 +107,9 @@ class Spheres extends Component {
                          .on('drag', drag)
                          .on('end', dragEnd))
                          .on('mouseover',showInfo)
+                        .call(d3.zoom()
+                            .scaleExtent([1/ 2, 8])
+                            .on("zoom", zoomed))
 
 
                     const ticked = () => {
