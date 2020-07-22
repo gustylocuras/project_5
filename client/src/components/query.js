@@ -37,11 +37,6 @@ function Query(){
 return(
   <React.Fragment>
     <Spheres data={data} />
-
-
-
-
-
   </React.Fragment>
 )
 

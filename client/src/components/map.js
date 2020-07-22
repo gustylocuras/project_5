@@ -16,7 +16,6 @@ function Map ({ geojson, property}) {
                           .domain([minProp, maxProp])
                           .range(["#ccc", "red"])
 
-
       const projection = d3.geoMercator()
 
       const pathGenerator = d3.geoPath().projection(projection)
