@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Spheres from './spheres'
+import Circles from './new_circles'
 
 function Query(){
+const [selection, setSelection] = useState()
+
   const COUNTRIES_QUERY = gql`
     query countriesQuery {
       countries {
@@ -32,11 +35,21 @@ function Query(){
 
     if (loading) return 'Loading...';
     // if (error) console.log(error); return `Error! ${error}`;
-    if(data) console.log(data);
+    
 
 return(
   <React.Fragment>
-    <Spheres data={data} />
+      <select value={selection} onChange={event => setSelection(event.target.value)}>
+        <option value="cases">cases</option>
+        <option value="recovered">today recovered</option>
+        <option value="todayCases">today's cases</option>
+        <option value="todayDeaths">today's deaths</option>
+        <option value="todayTests">Tests</option>
+        <option value="critical">Critical</option>
+
+    </select>
+    <Circles selection={selection} countries={data.countries} />
+
   </React.Fragment>
 )
 
