@@ -35,7 +35,7 @@ const [selection, setSelection] = useState()
 
     if (loading) return 'Loading...';
     // if (error) console.log(error); return `Error! ${error}`;
-    
+
 
 return(
   <React.Fragment>
@@ -44,7 +44,7 @@ return(
         <option value="recovered">today recovered</option>
         <option value="todayCases">today's cases</option>
         <option value="todayDeaths">today's deaths</option>
-        <option value="todayTests">Tests</option>
+        <option value="tests">Tests</option>
         <option value="critical">Critical</option>
 
     </select>

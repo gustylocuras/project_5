@@ -11,35 +11,27 @@ const circleSize = { min: 6, max: 80 };
 function Circles ({countries, selection}){
 
 useEffect(() => {
+
+  d3.selectAll('circle').remove()
+const feature = selection
+console.log(typeof feature);
+  //setup domain for each vriable
+    const selectionMinMax = d3.extent(countries, (d) => { return d[feature]})
+    const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
+    console.log(selectionMinMax);
 //setup circle scale and color scale
 
-  let circleRadiusScale = d3.scaleSqrt().range([circleSize.min, circleSize.max]);
-  let colorScale = d3.scaleSequential(d3.interpolateReds)
+  let circleRadiusScale = d3.scaleSqrt().domain(selectionMinMax).range([circleSize.min, circleSize.max]);
+  let colorScale = d3.scaleSequential(d3.interpolateReds).domain(deathsMinMax)
 
-
-//setup domain for each vriable
-  const selectionMinMax = d3.extent(countries, (d) => { return d[selection]})
-  const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
-
-
-//update the scales with domains
-   circleRadiusScale.domain(selectionMinMax)
-   colorScale.domain(deathsMinMax)
-
+  countries = countries.sort((a, b) =>
+    b.cases - a.cases
+  )
 
 //setup the svg dimensions
-  const chart = d3.select('.chart')
-    .attr('width', width)
-    .attr('height', height);
-
-    //define ticked for tick time of the force layout
-
-    const ticked = (element) => {
-      element
-      .attr("cx", function(d) { return d.x ; })
-      .attr("cy", function(d) { return d.y ; })
-
-        };
+  // const chart = d3.select('.chart')
+  //   .attr('width', width)
+  //   .attr('height', height);
 
 
 //setup force layout
@@ -48,10 +40,8 @@ useEffect(() => {
                   .force("y", d3.forceY())
                   .force("x", d3.forceX())
                   .force('collide', d3.forceCollide().strength(0.5).iterations(5))
-                  .force("charge", d3.forceManyBody().strength((d) => {
-                    return -Math.pow(this.circleRadiusScale(d[selection]), 2) * forceStrength;
-                  }))
-                  .on('tick', ticked)
+
+
 
     // setup the drag events
 
@@ -73,29 +63,43 @@ useEffect(() => {
 
     //create the circles
 
-    const circles = d3.select('.chart')
+    let circles = d3.select('.chart')
         .selectAll('circle')
         .data(countries).enter()
         .append('circle')
-        .attr("r", d => { return this.circleRadiusScale(d[selection])})
-        .attr("fill", d => { return this.colorScale(d.deaths)})
+        .attr("r", d => { return circleRadiusScale(d[selection])})
+        .attr("fill", d => { return colorScale(d.deaths)})
         .attr("stroke", "red" )
         .call(d3.drag()
          .on('start', dragStart)
          .on('drag', drag)
          .on('end', dragEnd))
+
          // .on('mouseover',showInfo)
         // .call(d3.zoom()
         //     .scaleExtent([1/ 2, 8])
         //     .on("zoom", zoomed))
 
-})
+        const ticked = () => {
+          circles
+
+          .attr("cx", function(d) { return d.x ; })
+          .attr("cy", function(d) { return d.y ; })
+
+            };
+        force.nodes(countries)
+            .force("charge", d3.forceManyBody().strength((d) => {
+              return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength || -Math.pow(circleRadiusScale(d.cases), 2) * forceStrength;
+            }))
+            .on('tick', ticked)
+
+}, [countries, selection])
 
 
   return(
     <div className='container'>
       <div className='chartContainer'>
-        <svg className='chart'>
+        <svg style={{height: "500px", width: "580px"}} className='chart'>
         </svg>
       </div>
     </div>
