@@ -89,7 +89,7 @@ console.log(typeof feature);
             };
         force.nodes(countries)
             .force("charge", d3.forceManyBody().strength((d) => {
-              return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength || -Math.pow(circleRadiusScale(d.cases), 2) * forceStrength;
+              return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength;
             }))
             .on('tick', ticked)
 
