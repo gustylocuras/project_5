@@ -6,7 +6,16 @@ import History from './historical'
 
 function Query(){
 const [selection, setSelection] = useState()
-const [population, setPopulation] = useState('cases')
+
+const [ country, setCountry ] = useState('USA')
+
+function getCountry (event){
+  let countryName = event.target.value
+  setCountry(countryName)
+}
+
+
+
 
   const COUNTRIES_QUERY = gql`
     query countriesQuery {
@@ -54,12 +63,11 @@ return(
     </select>
     <Circles selection={selection} countries={data.countries} />
 
-    <select value={population} onChange={event => setPopulation(event.target.value)}>
-      <option value="cases">cases</option>
-      <option value="deaths">deaths</option>
-      <option value="recovered">recovered</option>
-  </select>
-    <History population={population} historical={data.historical}/>
+
+      <input onChange={getCountry} type='text' placeholder='Country'/><br/>
+      
+
+    <History country={country} historical={data.historical}/>
 
   </React.Fragment>
 )
