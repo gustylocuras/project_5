@@ -12,14 +12,17 @@ const [line, setLine] = useState()
 let xAxisRef = useRef()
 let yAxisRef = useRef()
 
-
+//parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
   return d.country === country
 });
 
+const currentCountry = historical[selected];
+
+
 console.log(historical[selected]);
 //
-//   const dayCount = Object.keys(historical[0].timeline[population]).length - 1;
+//   const dayCount = Object.keys(historical[selected].timeline[population]).length - 1;
 // console.log(dayCount);
   // let days = []
   // let cases = []
@@ -32,25 +35,33 @@ console.log(historical[selected]);
 
 // console.log(days, cases);
 
-//   useEffect(() => {
-//     // const timeDomain = d3.extent(historical, d => Object.keys(+d.timeline[population]))
-// // console.log(timeDomain);
+  useEffect(() => {
+   for(let lineData in currentCountry.timeline){
+     const timeDomainMax = Object.keys(lineData).length - 1
+     const populationDomain = d3.extent(Object.values(lineData))
+
+     const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
+     const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
+
+     xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
+     yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
+
+    const lineGenerator = d3.line().x(xScale([1, timeDomainMax]))
+                                   .y( d => yScale(populationDomain))
+
+    const line = lineGenerator(historical)
+    setLine(line)
+
+
+ }
+    // const timeDomain = d3.extent(historical, d => Object.keys(+d.timeline[population]))
+// console.log(timeDomain);
 //     const populationDomain = d3.extent(historical, d => Object.values(d.timeline[population]))
 // console.log(populationDomain);
-//     const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, dayCount])
-//     const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
-//
-//      xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
-//      yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
-//
-//     const lineGenerator = d3.line().x(xScale([1, dayCount]))
-//                                    .y( d => yScale(Object.values(+d.timeline[population])))
-//
-//     const line = lineGenerator(historical)
-//     setLine(line)
-//
-//
-//   }, [historical, population])
+
+
+
+}, [historical, country])
 
   return(
     <div>

@@ -9,8 +9,14 @@ const [selection, setSelection] = useState()
 
 const [ country, setCountry ] = useState('USA')
 
+let countryName;
+
 function getCountry (event){
-  let countryName = event.target.value
+  countryName = event.target.value
+
+}
+
+function searchCountry(){
   setCountry(countryName)
 }
 
@@ -65,7 +71,8 @@ return(
 
 
       <input onChange={getCountry} type='text' placeholder='Country'/><br/>
-      
+      <button onClick={searchCountry}>Search</button>
+
 
     <History country={country} historical={data.historical}/>
 
