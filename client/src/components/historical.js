@@ -64,17 +64,19 @@ const currentCountry = historical[selected];
        }
        console.log(lines);
        const casesLineData = lines.slice(0,lines.length/3)
-       console.log(casesLineData);
+       const deathsLineData = lines.slice((lines.length/3), (lines.length/3)*2 )
+       const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
+       console.log(casesLineData, deathsLineData, recoveredLineData);
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
        const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
 
        xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
        yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
 
-      const lineGenerator = d3.line().x(xScale( d => d.day))
-                                     .y(yScale( d => d.number))
+      const lineGenerator = d3.line().x(d => xScale(d.day))
+                                     .y(d => yScale(d.number))
 
-      const line = lineGenerator(casesLineData)
+      const line = lineGenerator(recoveredLineData)
       console.log(line);
       setLine(line)
 
