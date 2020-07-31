@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as d3 from 'd3';
+import _ from 'lodash'
 
 const width = 650;
 const height = 400;
@@ -41,26 +42,27 @@ const currentCountry = historical[selected];
      let lineData = currentCountry.timeline[object]
 
      if(lineData !== 'timeline'){
+       console.log(Object.entries(lineData));
        console.log(lineData)
-       const timeDomainMax = Object.values(lineData)
-       // console.log(timeDomainMax);
-       const populationDomain = d3.extent(Object.keys(lineData))
-       // console.log(populationDomain);
+       const timeDomainMax = Object.keys(lineData).length-1
+       console.log(timeDomainMax);
+       const populationDomain = d3.extent(Object.values(lineData))
+       console.log(populationDomain);
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
        const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
 
        xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
        yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
 
-      const lineGenerator = d3.line().x(xScale([1, timeDomainMax]))
-                                     .y( d => yScale(populationDomain))
+      const lineGenerator = d3.line().x(xScale())
+                                     .y(yScale())
 
-      const line = lineGenerator(historical)
+
       setLine(line)
 
+      
 
      }
-console.log(line);
 
  }
     // const timeDomain = d3.extent(historical, d => Object.keys(+d.timeline[population]))
