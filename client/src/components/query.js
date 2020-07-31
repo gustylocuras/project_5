@@ -5,8 +5,8 @@ import Circles from './new_circles'
 import History from './historical'
 
 function Query(){
-const [selection, setSelection] = useState()
 
+const [selection, setSelection] = useState()
 const [ country, setCountry ] = useState('USA')
 
 let countryName;

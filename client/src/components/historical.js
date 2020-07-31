@@ -20,7 +20,7 @@ let selected = historical.findIndex((d) => {
 const currentCountry = historical[selected];
 
 
-console.log(historical[selected]);
+
 //
 //   const dayCount = Object.keys(historical[selected].timeline[population]).length - 1;
 // console.log(dayCount);
@@ -36,22 +36,31 @@ console.log(historical[selected]);
 // console.log(days, cases);
 
   useEffect(() => {
-   for(let lineData in currentCountry.timeline){
-     const timeDomainMax = Object.keys(lineData).length - 1
-     const populationDomain = d3.extent(Object.values(lineData))
 
-     const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-     const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
+   for(let object in currentCountry.timeline){
+     let lineData = currentCountry.timeline[object]
 
-     xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
-     yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
+     if(lineData !== 'timeline'){
+       console.log(lineData)
+       const timeDomainMax = Object.values(lineData)
+       // console.log(timeDomainMax);
+       const populationDomain = d3.extent(Object.keys(lineData))
+       // console.log(populationDomain);
+       const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
+       const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
 
-    const lineGenerator = d3.line().x(xScale([1, timeDomainMax]))
-                                   .y( d => yScale(populationDomain))
+       xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
+       yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
 
-    const line = lineGenerator(historical)
-    setLine(line)
+      const lineGenerator = d3.line().x(xScale([1, timeDomainMax]))
+                                     .y( d => yScale(populationDomain))
 
+      const line = lineGenerator(historical)
+      setLine(line)
+
+
+     }
+console.log(line);
 
  }
     // const timeDomain = d3.extent(historical, d => Object.keys(+d.timeline[population]))
