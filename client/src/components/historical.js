@@ -37,30 +37,48 @@ const currentCountry = historical[selected];
 // console.log(days, cases);
 
   useEffect(() => {
-
+    const lines = []
    for(let object in currentCountry.timeline){
      let lineData = currentCountry.timeline[object]
 
      if(lineData !== 'timeline'){
-       console.log(Object.entries(lineData));
+       console.log(Object.keys(lineData));
        console.log(lineData)
        const timeDomainMax = Object.keys(lineData).length-1
        console.log(timeDomainMax);
        const populationDomain = d3.extent(Object.values(lineData))
        console.log(populationDomain);
+       let day = 0
+       for(let i = 0; i < Object.keys(lineData).length; i++){
+
+         if(day < Object.keys(lineData).length){
+           day++
+           const eachLine = {
+             day: day,
+             number: Object.values(lineData)[i]
+           }
+           lines.push(eachLine)
+         } else {
+           day = 1
+          }
+       }
+       console.log(lines);
+       const casesLineData = lines.slice(0,lines.length/3)
+       console.log(casesLineData);
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
        const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
 
        xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
        yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
 
-      const lineGenerator = d3.line().x(xScale())
-                                     .y(yScale())
+      const lineGenerator = d3.line().x(xScale( d => d.day))
+                                     .y(yScale( d => d.number))
 
-
+      const line = lineGenerator(casesLineData)
+      console.log(line);
       setLine(line)
 
-      
+
 
      }
 
