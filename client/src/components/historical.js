@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 const width = 650;
 const height = 400;
-const margin = {top:20, right: 5, bottom: 20, left: 35}
+const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 
 
@@ -13,6 +13,9 @@ const [casesLine, setCasesLine] = useState()
 const [deathsLine, setDeathsLine] = useState()
 const [recoveredLine, setRecoveredLine] = useState()
 
+const [casesArea, setCasesArea] = useState()
+const [deathsArea, setDeathsArea] = useState()
+const [recoveredArea, setRecoveredArea] = useState()
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
   return d.country === country
@@ -21,22 +24,8 @@ let selected = historical.findIndex((d) => {
 const currentCountry = historical[selected];
 
 
-
-//
-//   const dayCount = Object.keys(historical[selected].timeline[population]).length - 1;
-// console.log(dayCount);
-  // let days = []
-  // let cases = []
-  // const dataParser = historical.map((country) => {
-  //   for(let [key, value] of Object.entries(country.timeline[population])){
-  //     days.push(key)
-  //     cases.push(value)
-  //   }
-  // })
-
-// console.log(days, cases);
-
   useEffect(() => {
+
     const lines = []
    for(let object in currentCountry.timeline){
      let lineData = currentCountry.timeline[object]
@@ -74,8 +63,13 @@ const currentCountry = historical[selected];
 
       const lineGenerator = d3.line().x(d => xScale(d.day))
                                      .y(d => yScale(d.number))
+      const area = d3.area().x(d => xScale(d.day))
+                            .y0(height - margin.left - margin.bottom + 5)
+                            .y1(d => yScale(d.number))
 
-
+      setCasesArea(area(casesLineData))
+      setDeathsArea(area(deathsLineData))
+      setRecoveredArea(area(recoveredLineData))
 
       setCasesLine(lineGenerator(casesLineData))
       setDeathsLine(lineGenerator(deathsLineData))
@@ -85,17 +79,9 @@ const currentCountry = historical[selected];
 
       const yAxis = d3.select('.yAxis')
                     .call(d3.axisLeft(yScale))
-
-
      }
 
  }
-    // const timeDomain = d3.extent(historical, d => Object.keys(+d.timeline[population]))
-// console.log(timeDomain);
-//     const populationDomain = d3.extent(historical, d => Object.values(d.timeline[population]))
-// console.log(populationDomain);
-
-
 
 }, [historical, country])
 
@@ -105,8 +91,11 @@ const currentCountry = historical[selected];
         <path d={casesLine}  stroke='green' fill="none" />
         <path d={deathsLine} stroke='red' fill="none" />
         <path d={recoveredLine} stroke='blue' fill="none" />
+        <path d={casesArea} fill='green' />
+        <path d={recoveredArea} fill='blue' />
+        <path d={deathsArea} fill='red' />
         <g>
-          <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom})`} />
+          <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom - margin.left + 5})`} />
           <g className='yAxis' transform={`translate( ${margin.left} , 0)`} />
         </g>
       </svg>
