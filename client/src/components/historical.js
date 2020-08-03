@@ -9,9 +9,9 @@ const margin = {top:20, right: 5, bottom: 20, left: 35}
 
 
 function Historical ({ historical, country }) {
-const [line, setLine] = useState()
-let xAxisRef = useRef()
-let yAxisRef = useRef()
+const [casesLine, setCasesLine] = useState()
+const [deathsLine, setDeathsLine] = useState()
+const [recoveredLine, setRecoveredLine] = useState()
 
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
@@ -68,18 +68,23 @@ const currentCountry = historical[selected];
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
        console.log(casesLineData, deathsLineData, recoveredLineData);
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-       const yScale = d3.scaleLinear().range([0, width / 2]).domain(populationDomain)
+       const yScale = d3.scaleLinear().range([width / 2, 0]).domain(populationDomain)
 
-       xAxisRef = d3.axisBottom().scale(xScale).tickFormat(d3.timeFormat('%b'))
-       yAxisRef = d3.axisLeft().scale(yScale).tickFormat( d => `${d} cases`)
+
 
       const lineGenerator = d3.line().x(d => xScale(d.day))
                                      .y(d => yScale(d.number))
 
-      const line = lineGenerator(recoveredLineData)
-      console.log(line);
-      setLine(line)
 
+
+      setCasesLine(lineGenerator(casesLineData))
+      setDeathsLine(lineGenerator(deathsLineData))
+      setRecoveredLine(lineGenerator(recoveredLineData))
+      const xAxis = d3.select('.xAxis')
+                    .call(d3.axisBottom(xScale))
+
+      const yAxis = d3.select('.yAxis')
+                    .call(d3.axisLeft(yScale))
 
 
      }
@@ -96,13 +101,16 @@ const currentCountry = historical[selected];
 
   return(
     <div>
-      <svg width={width} height={height}>
-
+      <svg className="lines" width={width} height={height}>
+        <path d={casesLine}  stroke='green' fill="none" />
+        <path d={deathsLine} stroke='red' fill="none" />
+        <path d={recoveredLine} stroke='blue' fill="none" />
+        <g>
+          <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom})`} />
+          <g className='yAxis' transform={`translate( ${margin.left} , 0)`} />
+        </g>
       </svg>
-      <g>
-        <g ref={xAxisRef} transform={`translate( 0 , ${height - margin.bottom})`} />
-        <g ref={yAxisRef} transform={`translate( ${margin.left} , 0)`} />
-      </g>
+
     </div>
   )
 }
