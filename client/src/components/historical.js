@@ -9,6 +9,7 @@ const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 
 function Historical ({ historical, country }) {
+console.log(historical);
 const [casesLine, setCasesLine] = useState()
 const [deathsLine, setDeathsLine] = useState()
 const [recoveredLine, setRecoveredLine] = useState()
@@ -16,6 +17,7 @@ const [recoveredLine, setRecoveredLine] = useState()
 const [casesArea, setCasesArea] = useState()
 const [deathsArea, setDeathsArea] = useState()
 const [recoveredArea, setRecoveredArea] = useState()
+
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
   return d.country === country

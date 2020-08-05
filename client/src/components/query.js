@@ -17,10 +17,9 @@ function getCountry (event){
 }
 
 function searchCountry(){
+  if(countryName)
   setCountry(countryName)
 }
-
-
 
 
   const COUNTRIES_QUERY = gql`
