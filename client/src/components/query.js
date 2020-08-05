@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Circles from './new_circles'
 import History from './historical'
+import AutoComplete from './autocomplete'
 
 function Query(){
 
@@ -68,8 +69,8 @@ return(
     </select>
     <Circles selection={selection} countries={data.countries} />
 
+    <AutoComplete getCountry={getCountry} historical={data.historical}/>
 
-      <input onChange={getCountry} type='text' placeholder='Country'/><br/>
       <button onClick={searchCountry}>Search</button>
 
 

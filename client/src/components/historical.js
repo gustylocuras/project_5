@@ -9,7 +9,7 @@ const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 
 function Historical ({ historical, country }) {
-console.log(historical);
+
 const [casesLine, setCasesLine] = useState()
 const [deathsLine, setDeathsLine] = useState()
 const [recoveredLine, setRecoveredLine] = useState()
@@ -33,12 +33,12 @@ const currentCountry = historical[selected];
      let lineData = currentCountry.timeline[object]
 
      if(lineData !== 'timeline'){
-       console.log(Object.keys(lineData));
-       console.log(lineData)
+
+
        const timeDomainMax = Object.keys(lineData).length-1
-       console.log(timeDomainMax);
+
        const populationDomain = d3.extent(Object.values(lineData))
-       console.log(populationDomain);
+
        let day = 0
        for(let i = 0; i < Object.keys(lineData).length; i++){
 
@@ -53,11 +53,11 @@ const currentCountry = historical[selected];
            day = 1
           }
        }
-       console.log(lines);
+
        const casesLineData = lines.slice(0,lines.length/3)
        const deathsLineData = lines.slice((lines.length/3), (lines.length/3)*2 )
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
-       console.log(casesLineData, deathsLineData, recoveredLineData);
+
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
        const yScale = d3.scaleLinear().range([width / 2, 0]).domain(populationDomain)
 
