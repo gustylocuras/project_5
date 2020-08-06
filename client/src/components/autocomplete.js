@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 
-function AutoComplete({ historical, getCountry}){
+function AutoComplete({ historical, getCountry, searchCountry}){
   const [options, setOptions] = useState([])
-
+  const [input, setInput] = useState()
 
 const countriesNames = []
 
@@ -36,10 +36,14 @@ console.log(options);
 
   return(
     <>
-      <input onChange={getOptions} type='text' placeholder='Country'/><br/>
+      <input onChange={getOptions} type='text' placeholder='Country' /><br/>
       <ul> {options.map((option, key) => {
-        
-        return <li className='options' key={key}>{option}</li>
+
+        return <li onClick={() => {
+          getCountry(option)
+          searchCountry()
+          setOptions([])
+        }} className='options' key={key}>{option}</li>
       })}
       </ul>
     </>

@@ -12,8 +12,8 @@ const [ country, setCountry ] = useState('USA')
 
 let countryName;
 
-function getCountry (event){
-  countryName = event.target.value
+function getCountry (option){
+  countryName = option
 
 }
 
@@ -69,7 +69,7 @@ return(
     </select>
     <Circles selection={selection} countries={data.countries} />
 
-    <AutoComplete getCountry={getCountry} historical={data.historical}/>
+    <AutoComplete searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
 
       <button onClick={searchCountry}>Search</button>
 
