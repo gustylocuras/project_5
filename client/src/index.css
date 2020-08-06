@@ -92,3 +92,9 @@ h3 {
 .lines {
   background: white;
 }
+
+.options {
+  color: black;
+  background:white;
+  z-index: 1;
+}

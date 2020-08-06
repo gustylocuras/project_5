@@ -29,16 +29,17 @@ function getOptions(event){
       let fileName = first.concat(array).replace(/,/g, '')
       completeOptions.push(fileName)
     }
-  } setOptions(completeOptions);
+  } console.log(completeOptions);setOptions(completeOptions);
 
 }
-
+console.log(options);
 
   return(
     <>
       <input onChange={getOptions} type='text' placeholder='Country'/><br/>
-      <ul> {options.map((i, key) => {
-        return <li key={key}>{options[i]}</li>
+      <ul> {options.map((option, key) => {
+        
+        return <li className='options' key={key}>{option}</li>
       })}
       </ul>
     </>
