@@ -52,7 +52,6 @@ function searchCountry(){
 
     `;
     const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
-
     if (loading) return 'Loading...';
     // if (error) console.log(error); return `Error! ${error}`;
 
@@ -68,20 +67,11 @@ return(
         <option value="critical">Critical</option>
     </select>
     <Circles selection={selection} countries={data.countries} />
-
     <AutoComplete searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
-
-      <button onClick={searchCountry}>Search</button>
-
-
     <History country={country} historical={data.historical}/>
-
   </React.Fragment>
 )
 
 }
-
-
-
 
 export default Query;
