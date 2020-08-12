@@ -78,10 +78,13 @@ if(forces == 'center'){
         .force("y", d3.forceY())
         .force("x", d3.forceX())
         .force('collide', d3.forceCollide().strength(0.5).iterations(5))
+        .force("charge", d3.forceManyBody().strength((d) => {
+          return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength;
+        }))
 } else if(forces == 'countries'){
-  force.force("x", d3.forceX( d => projection([d.countryInfo.long, d.countryInfo.lat])[1]))
-        .force("y", d3.forceY( d => projection([d.countryInfo.long, d.countryInfo.lat])[0]))
-        
+  force.force("x", d3.forceX( d => projection([d.countryInfo.long, d.countryInfo.lat])[0]).strength(forceStrength))
+        .force("y", d3.forceY( d => projection([d.countryInfo.long, d.countryInfo.lat])[1]* (1 + projectionStretchY)).strength(forceStrength))
+
 }
 
 
@@ -132,9 +135,7 @@ if(forces == 'center'){
 
             };
         force.nodes(countries)
-            .force("charge", d3.forceManyBody().strength((d) => {
-              return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength;
-            }))
+
             .on('tick', ticked)
 
 
@@ -144,7 +145,7 @@ if(forces == 'center'){
   return(
     <div className='container'>
       <div className='chartContainer'>
-        <svg style={{height: "500px", width: "580px"}} className='chart'>
+        <svg style={{height: "500px", width: "900px"}} className='chart'>
         </svg>
         <button onClick={() => setForces('countries')}>force center</button>
       </div>
