@@ -1,14 +1,52 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
-const width = 580
+const width = 900
 const height = 550
+const force = d3.forceSimulation()
 const forceStrength = 0.12
 
 
 const circleSize = { min: 6, max: 80 };
 
+//geoprojection force
+  let projectionStretchY = 0.25,
+        projectionMargin = circleSize.max,
+        projection = d3.geoEquirectangular()
+            .scale((width / 2 - projectionMargin) / Math.PI)
+            .translate([width / 2, height * (1 - projectionStretchY) / 2]);
+
+
 function Circles ({countries, selection}){
+
+  const [forces, setForces] = useState('center')
+
+
+  // function getForceCenter(){
+  //   console.log("use the force");
+  //   setForces({
+  //     x: d3.forceX(),
+  //     y: d3.forceY()
+  //   })
+  //
+  // }
+
+  // const pepe = d3.forceX(countries, d =>{
+  //   return projection([d.countryInfo.long, d.countryInfo.lat])
+  // })
+  //   console.log(projection([countries[0].countryInfo.long, countries[0].countryInfo.lat]))
+
+  // function getForceCountries(){
+  //   setForces({
+  //     x: d3.forceX(countries, d =>{
+  //       return projection(d.countryInfo.lat)
+  //     }).strength(forceStrength),
+  //
+  //     y: d3.forceY(countries, d =>{
+  //       return projection(d.countryInfo.long)
+  //     }).strength(forceStrength)
+  //   })
+  // }
 
 useEffect(() => {
 
@@ -35,11 +73,17 @@ console.log(typeof feature);
 
 
 //setup force layout
-  const force = d3.forceSimulation()
-                  .force('center', d3.forceCenter(width / 2, height / 2))
-                  .force("y", d3.forceY())
-                  .force("x", d3.forceX())
-                  .force('collide', d3.forceCollide().strength(0.5).iterations(5))
+if(forces == 'center'){
+  force .force('center', d3.forceCenter(width / 2, height / 2))
+        .force("y", d3.forceY())
+        .force("x", d3.forceX())
+        .force('collide', d3.forceCollide().strength(0.5).iterations(5))
+} else if(forces == 'countries'){
+  force.force("x", d3.forceX( d => projection([d.countryInfo.long, d.countryInfo.lat])[1]))
+        .force("y", d3.forceY( d => projection([d.countryInfo.long, d.countryInfo.lat])[0]))
+        
+}
+
 
 
 
@@ -93,7 +137,8 @@ console.log(typeof feature);
             }))
             .on('tick', ticked)
 
-}, [countries, selection])
+
+}, [countries, selection, forces])
 
 
   return(
@@ -101,6 +146,7 @@ console.log(typeof feature);
       <div className='chartContainer'>
         <svg style={{height: "500px", width: "580px"}} className='chart'>
         </svg>
+        <button onClick={() => setForces('countries')}>force center</button>
       </div>
     </div>
   )

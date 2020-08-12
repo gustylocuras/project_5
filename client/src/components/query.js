@@ -34,6 +34,10 @@ function searchCountry(){
                 }
               }
       countries {
+        countryInfo{
+          lat
+          long
+        }
         country
         cases
         todayCases
