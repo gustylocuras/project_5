@@ -104,6 +104,16 @@ if(forces == 'center'){
       d.fy = null;
     }
 
+    const showInfo = d => {
+      d3.select(".title").html(d.country)
+      d3.select(".cases").html("Cases: " + d.cases)
+      d3.select(".deaths").html("Deaths: " + d.deaths)
+      d3.select(".todayCases").html("Today's Cases: " + d.todayCases)
+      d3.select(".todayDeaths").html("Today's Deaths: " + d.todayDeaths)
+      d3.select(".tests").html("Tests: " + d.tests)
+
+    }
+
 
     //create the circles
 
@@ -118,6 +128,7 @@ if(forces == 'center'){
          .on('start', dragStart)
          .on('drag', drag)
          .on('end', dragEnd))
+         .on('mouseover', showInfo)
 
          // .on('mouseover',showInfo)
         // .call(d3.zoom()
@@ -140,14 +151,28 @@ if(forces == 'center'){
 
 
   return(
+    <>
     <div className='container'>
+    <button onClick={() => setForces('countries')}>map</button>
+    <button onClick={() => setForces('center')}>bubble</button>
       <div className='chartContainer'>
         <svg style={{height: "500px", width: "900px"}} className='chart'>
         </svg>
-        <button onClick={() => setForces('countries')}>map</button>
-        <button onClick={() => setForces('center')}>bubble</button>
+
+        <div className="tooltip">
+          <h1 className="title">Country name</h1>
+          <div className="data"/>
+          <h3 className="cases">Cases</h3>
+          <h3 className="deaths">Deaths</h3>
+          <h3 className="todayCases">Today's cases</h3>
+          <h3 className="todayDeaths">Today's deaths</h3>
+          <h3 className="tests">Tests</h3>
+        </div>
+
       </div>
+
     </div>
+    </>
   )
 }
 
