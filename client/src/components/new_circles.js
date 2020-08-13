@@ -10,11 +10,11 @@ const forceStrength = 0.12
 const circleSize = { min: 6, max: 80 };
 
 //geoprojection force
-  let projectionStretchY = 0.25,
+  let projectionStretchY = 0.15,
         projectionMargin = circleSize.max,
         projection = d3.geoEquirectangular()
             .scale((width / 2 - projectionMargin) / Math.PI)
-            .translate([width / 2, height * (1 - projectionStretchY) / 2]);
+            .translate([width / 2, height * (1 - projectionStretchY) / 3]);
 
 
 function Circles ({countries, selection}){
@@ -51,8 +51,8 @@ function Circles ({countries, selection}){
 useEffect(() => {
 
   d3.selectAll('circle').remove()
-const feature = selection
-console.log(typeof feature);
+  const feature = selection
+  console.log(typeof feature);
   //setup domain for each vriable
     const selectionMinMax = d3.extent(countries, (d) => { return d[feature]})
     const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
@@ -82,13 +82,10 @@ if(forces == 'center'){
           return  -Math.pow(circleRadiusScale(d[selection]), 2)  * forceStrength;
         }))
 } else if(forces == 'countries'){
-  force.force("x", d3.forceX( d => projection([d.countryInfo.long, d.countryInfo.lat])[0]).strength(forceStrength))
-        .force("y", d3.forceY( d => projection([d.countryInfo.long, d.countryInfo.lat])[1]* (1 + projectionStretchY)).strength(forceStrength))
+  force.force("x", d3.forceX( d => projection([d.countryInfo.long, d.countryInfo.lat])[0]).strength(0.4))
+        .force("y", d3.forceY( d => projection([d.countryInfo.long, d.countryInfo.lat])[1]).strength(0.4))
 
 }
-
-
-
 
     // setup the drag events
 
@@ -147,7 +144,8 @@ if(forces == 'center'){
       <div className='chartContainer'>
         <svg style={{height: "500px", width: "900px"}} className='chart'>
         </svg>
-        <button onClick={() => setForces('countries')}>force center</button>
+        <button onClick={() => setForces('countries')}>map</button>
+        <button onClick={() => setForces('center')}>bubble</button>
       </div>
     </div>
   )
