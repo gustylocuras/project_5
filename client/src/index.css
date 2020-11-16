@@ -88,3 +88,13 @@ h3 {
   width: 100%;
   background: ghostwhite;
 }
+
+.lines {
+  background: white;
+}
+
+.options {
+  color: black;
+  background:white;
+  z-index: 1;
+}

@@ -53,6 +53,8 @@ componentDidMount(){
                   .force('center', d3.forceCenter(width / 2, height / 2))
                   .force("y", d3.forceY())
                   .force("x", d3.forceX())
+                  .force('collide', d3.forceCollide().strength(0.5).iterations(5))
+                  .on('tick', ticked)
 
 
   countries = countries.sort((a, b) =>
@@ -125,8 +127,7 @@ componentDidMount(){
       .force("charge", d3.forceManyBody().strength((d) => {
         return -Math.pow(this.circleRadiusScale(d.cases), 2) * forceStrength;
       }))
-    .force('collide', d3.forceCollide().strength(0.5).iterations(5))
-      .on('tick', ticked)
+
 
 
   // = countries.map((d) => {
