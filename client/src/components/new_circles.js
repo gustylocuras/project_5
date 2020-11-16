@@ -151,7 +151,7 @@ if(forces == 'center'){
 
 
   return(
-    <>
+    <React.Fragment>
     <div className='container'>
     <button onClick={() => setForces('countries')}>map</button>
     <button onClick={() => setForces('center')}>bubble</button>
@@ -172,7 +172,7 @@ if(forces == 'center'){
       </div>
 
     </div>
-    </>
+    </React.Fragment>
   )
 }
 

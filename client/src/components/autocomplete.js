@@ -32,7 +32,7 @@ function AutoComplete({ historical, getCountry, searchCountry}){
 }
 
   return(
-    <>
+    <React.Fragment>
       <input onChange={getOptions} type='text' placeholder='Country' /><br/>
       <ul> {options.map((option, key) => {
         return <li onClick={() => {
@@ -42,7 +42,7 @@ function AutoComplete({ historical, getCountry, searchCountry}){
         }} className='options' key={key}>{option}</li>
       })}
       </ul>
-    </>
+    </React.Fragment>
   )
 }
 
