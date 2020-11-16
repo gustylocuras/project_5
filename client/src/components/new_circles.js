@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
-const width = 900
+const width = 980
 const height = 550
 const force = d3.forceSimulation()
 const forceStrength = 0.12
@@ -156,7 +156,7 @@ if(forces == 'center'){
     <button onClick={() => setForces('countries')}>map</button>
     <button onClick={() => setForces('center')}>bubble</button>
       <div className='chartContainer'>
-        <svg style={{height: "500px", width: "900px"}} className='chart'>
+        <svg style={{height: "550px", width: "1400px"}} className='chart'>
         </svg>
 
         <div className="tooltip">

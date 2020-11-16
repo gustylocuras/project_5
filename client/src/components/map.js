@@ -38,7 +38,7 @@ function Map ({ geojson, property}) {
 
       return(
           <div className="map">
-            <svg className="svg-map" style={{height: "500px", width: "960px"}} ></svg>
+            <svg className="svg-map" style={{height: "500px", width: "1020px"}} ></svg>
 
           </div>
         )
