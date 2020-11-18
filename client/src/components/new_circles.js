@@ -166,7 +166,7 @@ if(forces == 'center'){
         </svg>
 
         <div className="dash">
-        <select value={selection} onChange={event => setSelection(event.target.value)}>
+        <select className="select" value={selection} onChange={event => setSelection(event.target.value)}>
           <option value="cases">cases</option>
           <option value="recovered">today recovered</option>
           <option value="todayCases">today's cases</option>
