@@ -7,7 +7,7 @@ import AutoComplete from './autocomplete'
 
 function Query(){
 
-const [selection, setSelection] = useState()
+const [selection, setSelection] = useState('cases')
 const [ country, setCountry ] = useState('USA')
 
 let countryName;
@@ -70,7 +70,7 @@ return(
         <option value="tests">Tests</option>
         <option value="critical">Critical</option>
     </select>
-    <Circles selection={selection} countries={data.countries} />
+    <Circles selection={selection} setSelection={setSelection} countries={data.countries} />
     <AutoComplete searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
     <History country={country} historical={data.historical}/>
   </React.Fragment>

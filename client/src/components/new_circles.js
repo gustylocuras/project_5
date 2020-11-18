@@ -17,7 +17,7 @@ const circleSize = { min: 6, max: 80 };
             .translate([width / 2, height * (1 - projectionStretchY) / 3]);
 
 
-function Circles ({countries, selection}){
+function Circles ({countries, selection, setSelection}){
 
   const [forces, setForces] = useState('center')
 
@@ -160,13 +160,20 @@ if(forces == 'center'){
   return(
     <React.Fragment>
     <div className='container'>
-    <button onClick={() => setForces('countries')}>map</button>
-    <button onClick={() => setForces('center')}>bubble</button>
+
       <div className='chartContainer'>
         <svg style={{height: "630px", width: "1400px"}} className='chart'>
         </svg>
 
         <div className="dash">
+        <select value={selection} onChange={event => setSelection(event.target.value)}>
+          <option value="cases">cases</option>
+          <option value="recovered">today recovered</option>
+          <option value="todayCases">today's cases</option>
+          <option value="todayDeaths">today's deaths</option>
+          <option value="tests">Tests</option>
+          <option value="critical">Critical</option>
+      </select>
           <label className="switch">
             <input type="checkbox" onClick={() => toggleForces()}/>
             <span className="slider round"></span>
