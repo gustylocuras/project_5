@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
-const width = 980
-const height = 550
+const width = 858
+const height = 630
 const force = d3.forceSimulation()
 const forceStrength = 0.12
 
@@ -21,6 +21,13 @@ function Circles ({countries, selection}){
 
   const [forces, setForces] = useState('center')
 
+ function toggleForces(){
+   if(forces == 'center'){
+     setForces('countries')
+   } else if(forces == 'countries'){
+     setForces('center')
+   }
+ }
 
   // function getForceCenter(){
   //   console.log("use the force");
@@ -156,19 +163,25 @@ if(forces == 'center'){
     <button onClick={() => setForces('countries')}>map</button>
     <button onClick={() => setForces('center')}>bubble</button>
       <div className='chartContainer'>
-        <svg style={{height: "590px", width: "1400px"}} className='chart'>
+        <svg style={{height: "630px", width: "1400px"}} className='chart'>
         </svg>
 
-        <div className="tooltip">
-          <h1 className="title">Country name</h1>
-          <div className="data"/>
-          <h3 className="cases">Cases</h3>
-          <h3 className="deaths">Deaths</h3>
-          <h3 className="todayCases">Today's cases</h3>
-          <h3 className="todayDeaths">Today's deaths</h3>
-          <h3 className="tests">Tests</h3>
-        </div>
+        <div className="dash">
+          <label className="switch">
+            <input type="checkbox" onClick={() => toggleForces()}/>
+            <span className="slider round"></span>
+          </label>
 
+          <div className="tooltip">
+            <h1 className="title">Country name</h1>
+            <div className="data"/>
+            <h3 className="cases">Cases</h3>
+            <h3 className="deaths">Deaths</h3>
+            <h3 className="todayCases">Today's cases</h3>
+            <h3 className="todayDeaths">Today's deaths</h3>
+            <h3 className="tests">Tests</h3>
+          </div>
+        </div>
       </div>
 
     </div>
