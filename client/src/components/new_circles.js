@@ -74,7 +74,7 @@ useEffect(() => {
 
 //setup force layout
 if(forces == 'center'){
-  force .force('center', d3.forceCenter(width / 2, height / 2))
+  force .force('center', d3.forceCenter(width / 2, height / 1.6))
         .force("y", d3.forceY())
         .force("x", d3.forceX())
         .force('collide', d3.forceCollide().strength(0.5).iterations(5))
@@ -156,7 +156,7 @@ if(forces == 'center'){
     <button onClick={() => setForces('countries')}>map</button>
     <button onClick={() => setForces('center')}>bubble</button>
       <div className='chartContainer'>
-        <svg style={{height: "550px", width: "1400px"}} className='chart'>
+        <svg style={{height: "590px", width: "1400px"}} className='chart'>
         </svg>
 
         <div className="tooltip">
