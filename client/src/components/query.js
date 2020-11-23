@@ -62,14 +62,6 @@ function searchCountry(){
 
 return(
   <React.Fragment>
-      <select value={selection} onChange={event => setSelection(event.target.value)}>
-        <option value="cases">cases</option>
-        <option value="recovered">today recovered</option>
-        <option value="todayCases">today's cases</option>
-        <option value="todayDeaths">today's deaths</option>
-        <option value="tests">Tests</option>
-        <option value="critical">Critical</option>
-    </select>
     <Circles selection={selection} setSelection={setSelection} countries={data.countries} />
     <AutoComplete searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
     <History country={country} historical={data.historical}/>

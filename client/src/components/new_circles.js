@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
-const width = 858
-const height = 630
+let width = 900
+let height = 500
 const force = d3.forceSimulation()
 const forceStrength = 0.12
 
@@ -10,11 +10,11 @@ const forceStrength = 0.12
 const circleSize = { min: 6, max: 80 };
 
 //geoprojection force
-  let projectionStretchY = 0.15,
-        projectionMargin = circleSize.max,
-        projection = d3.geoEquirectangular()
+  let projectionStretchY = 0.15
+  let projectionMargin = circleSize.max
+  let projection = d3.geoEquirectangular()
             .scale((width / 2 - projectionMargin) / Math.PI)
-            .translate([width / 2, height * (1 - projectionStretchY) / 3]);
+            .translate([width / 2, height * (1 - projectionStretchY) / 4]);
 
 
 function Circles ({countries, selection, setSelection}){
@@ -59,7 +59,6 @@ useEffect(() => {
 
   d3.selectAll('circle').remove()
   const feature = selection
-  console.log(typeof feature);
   //setup domain for each vriable
     const selectionMinMax = d3.extent(countries, (d) => { return d[feature]})
     const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
@@ -81,7 +80,7 @@ useEffect(() => {
 
 //setup force layout
 if(forces == 'center'){
-  force .force('center', d3.forceCenter(width / 2, height / 1.6))
+  force .force('center', d3.forceCenter(width / 1.7, height / 1.6))
         .force("y", d3.forceY())
         .force("x", d3.forceX())
         .force('collide', d3.forceCollide().strength(0.5).iterations(5))
@@ -162,31 +161,34 @@ if(forces == 'center'){
     <div className='container'>
 
       <div className='chartContainer'>
-        <svg style={{height: "630px", width: "1400px"}} className='chart'>
+      <select className="select" value={selection} onChange={event => setSelection(event.target.value)}>
+        <option value="cases">cases</option>
+        <option value="recovered">today recovered</option>
+        <option value="todayCases">today's cases</option>
+        <option value="todayDeaths">today's deaths</option>
+        <option value="tests">Tests</option>
+        <option value="critical">Critical</option>
+    </select>
+    <label className="switch">
+      <input type="checkbox" onClick={() => toggleForces()}/>
+      <span className="slider round"></span>
+    </label>
+        <svg style={{height: height, width: width}} className='chart'>
         </svg>
 
         <div className="dash">
-        <select className="select" value={selection} onChange={event => setSelection(event.target.value)}>
-          <option value="cases">cases</option>
-          <option value="recovered">today recovered</option>
-          <option value="todayCases">today's cases</option>
-          <option value="todayDeaths">today's deaths</option>
-          <option value="tests">Tests</option>
-          <option value="critical">Critical</option>
-      </select>
-          <label className="switch">
-            <input type="checkbox" onClick={() => toggleForces()}/>
-            <span className="slider round"></span>
-          </label>
+
+
 
           <div className="tooltip">
             <h1 className="title">Country name</h1>
-            <div className="data"/>
+            <div className="data">
             <h3 className="cases">Cases</h3>
             <h3 className="deaths">Deaths</h3>
             <h3 className="todayCases">Today's cases</h3>
             <h3 className="todayDeaths">Today's deaths</h3>
             <h3 className="tests">Tests</h3>
+            </div>
           </div>
         </div>
       </div>

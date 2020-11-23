@@ -51,6 +51,7 @@ nav, footer {
   background: #c060a1;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   align-content: space-around;
 
@@ -85,7 +86,9 @@ h3 {
 
 .data {
   margin: 0;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
   width: 100%;
   background: ghostwhite;
 }
@@ -165,11 +168,12 @@ input:checked + .slider:before {
 
 .dash{
   border: 1px solid gold;
-  padding: 2% 0%;
+  padding: 0% 0%;
   display: flex;
   flex-direction: column;
+  margin: 0;
   align-items:center;
-  width: 50%;
+  width: 98%;
 }
 .select{
   width: 40%;
