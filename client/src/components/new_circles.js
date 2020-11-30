@@ -13,8 +13,8 @@ const forceStrength = 0.12
 
 function Circles ({countries, selection, setSelection, windowSize}){
   const width = windowSize.width*0.8;
-  const height = windowSize.height*0.75;
-  const circleSize = { min: width/100, max: width/10 };
+  const height = windowSize.height*0.7;
+  const circleSize = { min: Math.sqrt((width*width) + (height*height))/150, max: Math.sqrt((width*width) + (height*height))/15 };
   //geoprojection force
     let projectionStretchY = 0.15
     let projectionMargin = circleSize.max
