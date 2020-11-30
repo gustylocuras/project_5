@@ -2,23 +2,25 @@ import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
 
-let width = 900
-let height = 520
+
 const force = d3.forceSimulation()
 const forceStrength = 0.12
 
 
-const circleSize = { min: 6, max: 60 };
+
 
 
 
 function Circles ({countries, selection, setSelection, windowSize}){
+  const width = windowSize.width*0.8;
+  const height = windowSize.height*0.75;
+  const circleSize = { min: width/100, max: width/10 };
   //geoprojection force
     let projectionStretchY = 0.15
     let projectionMargin = circleSize.max
     let projection = d3.geoEquirectangular()
-              .scale((windowSize.width / 2 - projectionMargin) / Math.PI)
-              .translate([windowSize.width / 2, windowSize.height * (1 - projectionStretchY) / 4]);
+              .scale((width / 2 - projectionMargin) / Math.PI)
+              .translate([width / 2, height * (1 - projectionStretchY) / 4]);
 
   const [forces, setForces] = useState('center')
 
@@ -81,7 +83,7 @@ useEffect(() => {
 
 //setup force layout
 if(forces == 'center'){
-  force .force('center', d3.forceCenter(windowSize.width / 1.7, windowSize.height / 1.6))
+  force .force('center', d3.forceCenter(width / 1.7, height / 1.6))
         .force("y", d3.forceY())
         .force("x", d3.forceX())
         .force('collide', d3.forceCollide().strength(0.5).iterations(5))
@@ -173,7 +175,7 @@ if(forces == 'center'){
       <input type="checkbox" onClick={() => toggleForces()}/>
       <span className="slider round"></span>
     </label>
-        <svg style={{height: windowSize.height, width: windowSize.width}} className='chart'>
+        <svg style={{height: height, width: width}} className='chart'>
         </svg>
 
         <div className="dash">

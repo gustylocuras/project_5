@@ -8,8 +8,8 @@ import UseWindowSize from './windowResize'
 
 function Query(){
 
-const windowSize = UseWindowSize()
-console.log(windowSize);
+let windowSize = UseWindowSize()
+
 
 const [selection, setSelection] = useState('cases')
 const [ country, setCountry ] = useState('USA')

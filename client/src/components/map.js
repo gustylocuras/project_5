@@ -39,7 +39,7 @@ console.log(windowSize);
 
       return(
           <div className="map">
-            <svg className="svg-map" style={{height: windowSize.height, width: windowSize.width}} ></svg>
+            <svg className="svg-map" style={{height: windowSize.height*0.45, width: windowSize.width*0.8}} ></svg>
 
           </div>
         )

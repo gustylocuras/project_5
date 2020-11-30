@@ -18,7 +18,7 @@ const [deathsArea, setDeathsArea] = useState()
 const [recoveredArea, setRecoveredArea] = useState()
 
 const width = windowSize.width*0.8;
-const height = windowSize.height*0.8;
+const height = windowSize.height*0.45;
 const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 //parses country to pass it as filter for historical array
@@ -62,7 +62,7 @@ const currentCountry = historical[selected];
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
 
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-       const yScale = d3.scaleLinear().range([width/1.47, 0]).domain(populationDomain)
+       const yScale = d3.scaleLinear().range([width/1.52, 0 ]).domain(populationDomain)
 
 
 
