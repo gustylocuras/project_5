@@ -14,9 +14,6 @@ class App extends React.Component {
         <Countries />
         <Query />
         <Footer />
-
-
-
       </div>
     )
   }

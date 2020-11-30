@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import _ from 'lodash'
 
-const width = 650;
-const height = 400;
-const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 
 
-function Historical ({ historical, country }) {
+
+function Historical ({ historical, country, windowSize }) {
+
 
 const [casesLine, setCasesLine] = useState()
 const [deathsLine, setDeathsLine] = useState()
@@ -17,6 +16,10 @@ const [recoveredLine, setRecoveredLine] = useState()
 const [casesArea, setCasesArea] = useState()
 const [deathsArea, setDeathsArea] = useState()
 const [recoveredArea, setRecoveredArea] = useState()
+
+const width = windowSize.width*0.8;
+const height = windowSize.height*0.8;
+const margin = {top:30, right: 15, bottom: 20, left: 60}
 
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
@@ -59,7 +62,7 @@ const currentCountry = historical[selected];
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
 
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-       const yScale = d3.scaleLinear().range([width / 2, 0]).domain(populationDomain)
+       const yScale = d3.scaleLinear().range([width/1.5, 0]).domain(populationDomain)
 
 
 
@@ -85,7 +88,7 @@ const currentCountry = historical[selected];
 
  }
 
-}, [historical, country])
+}, [historical, country, windowSize])
 
   return(
     <div>
@@ -98,7 +101,7 @@ const currentCountry = historical[selected];
         <path d={deathsArea} fill='red' />
         <g>
           <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom - margin.left + 5})`} />
-          <g className='yAxis' transform={`translate( ${margin.left} , 0)`} />
+          <g className='yAxis' transform={`translate( ${margin.left} , 25)`} />
         </g>
       </svg>
 

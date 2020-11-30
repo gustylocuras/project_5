@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import Circles from './new_circles'
-import History from './historical'
+import Historical from './historical'
 import AutoComplete from './autocomplete'
 import UseWindowSize from './windowResize'
 
@@ -68,7 +68,7 @@ return(
   <React.Fragment>
     <Circles windowSize={windowSize} selection={selection} setSelection={setSelection} countries={data.countries} />
     <AutoComplete windowSize={windowSize} searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
-    <History windowSize={windowSize} country={country} historical={data.historical}/>
+    <Historical windowSize={windowSize} country={country} historical={data.historical}/>
   </React.Fragment>
 )
 
