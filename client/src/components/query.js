@@ -4,8 +4,12 @@ import gql from 'graphql-tag';
 import Circles from './new_circles'
 import History from './historical'
 import AutoComplete from './autocomplete'
+import UseWindowSize from './windowResize'
 
 function Query(){
+
+const windowSize = UseWindowSize()
+console.log(windowSize);
 
 const [selection, setSelection] = useState('cases')
 const [ country, setCountry ] = useState('USA')
@@ -62,9 +66,9 @@ function searchCountry(){
 
 return(
   <React.Fragment>
-    <Circles selection={selection} setSelection={setSelection} countries={data.countries} />
-    <AutoComplete searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
-    <History country={country} historical={data.historical}/>
+    <Circles windowSize={windowSize} selection={selection} setSelection={setSelection} countries={data.countries} />
+    <AutoComplete windowSize={windowSize} searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
+    <History windowSize={windowSize} country={country} historical={data.historical}/>
   </React.Fragment>
 )
 

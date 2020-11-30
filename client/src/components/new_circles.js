@@ -1,23 +1,24 @@
 import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
+
 let width = 900
-let height = 500
+let height = 520
 const force = d3.forceSimulation()
 const forceStrength = 0.12
 
 
-const circleSize = { min: 6, max: 80 };
-
-//geoprojection force
-  let projectionStretchY = 0.15
-  let projectionMargin = circleSize.max
-  let projection = d3.geoEquirectangular()
-            .scale((width / 2 - projectionMargin) / Math.PI)
-            .translate([width / 2, height * (1 - projectionStretchY) / 4]);
+const circleSize = { min: 6, max: 60 };
 
 
-function Circles ({countries, selection, setSelection}){
+
+function Circles ({countries, selection, setSelection, windowSize}){
+  //geoprojection force
+    let projectionStretchY = 0.15
+    let projectionMargin = circleSize.max
+    let projection = d3.geoEquirectangular()
+              .scale((windowSize.width / 2 - projectionMargin) / Math.PI)
+              .translate([windowSize.width / 2, windowSize.height * (1 - projectionStretchY) / 4]);
 
   const [forces, setForces] = useState('center')
 
@@ -80,7 +81,7 @@ useEffect(() => {
 
 //setup force layout
 if(forces == 'center'){
-  force .force('center', d3.forceCenter(width / 1.7, height / 1.6))
+  force .force('center', d3.forceCenter(windowSize.width / 1.7, windowSize.height / 1.6))
         .force("y", d3.forceY())
         .force("x", d3.forceX())
         .force('collide', d3.forceCollide().strength(0.5).iterations(5))
@@ -153,7 +154,7 @@ if(forces == 'center'){
             .on('tick', ticked)
 
 
-}, [countries, selection, forces])
+}, [countries, selection, forces, windowSize])
 
 
   return(
@@ -165,7 +166,6 @@ if(forces == 'center'){
         <option value="cases">cases</option>
         <option value="recovered">today recovered</option>
         <option value="todayCases">today's cases</option>
-        <option value="todayDeaths">today's deaths</option>
         <option value="tests">Tests</option>
         <option value="critical">Critical</option>
     </select>
@@ -173,7 +173,7 @@ if(forces == 'center'){
       <input type="checkbox" onClick={() => toggleForces()}/>
       <span className="slider round"></span>
     </label>
-        <svg style={{height: height, width: width}} className='chart'>
+        <svg style={{height: windowSize.height, width: windowSize.width}} className='chart'>
         </svg>
 
         <div className="dash">

@@ -1,12 +1,13 @@
 import React, {  useEffect } from 'react';
 import * as d3 from 'd3';
-
+import UseWindowSize from './windowResize'
 
 
 
 function Map ({ geojson, property}) {
 
-
+const windowSize = UseWindowSize()
+console.log(windowSize);
 
   useEffect(() => {
       const svg = d3.select('svg')
@@ -38,7 +39,7 @@ function Map ({ geojson, property}) {
 
       return(
           <div className="map">
-            <svg className="svg-map" style={{height: "500px", width: "1020px"}} ></svg>
+            <svg className="svg-map" style={{height: windowSize.height, width: windowSize.width}} ></svg>
 
           </div>
         )
