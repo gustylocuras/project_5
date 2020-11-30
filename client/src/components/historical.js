@@ -62,7 +62,7 @@ const currentCountry = historical[selected];
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
 
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-       const yScale = d3.scaleLinear().range([width/1.5, 0]).domain(populationDomain)
+       const yScale = d3.scaleLinear().range([width/1.47, 0]).domain(populationDomain)
 
 
 
@@ -101,7 +101,7 @@ const currentCountry = historical[selected];
         <path d={deathsArea} fill='red' />
         <g>
           <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom - margin.left + 5})`} />
-          <g className='yAxis' transform={`translate( ${margin.left} , 25)`} />
+          <g className='yAxis' transform={`translate( ${margin.left} , 0)`} />
         </g>
       </svg>
 
