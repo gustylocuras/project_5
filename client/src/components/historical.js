@@ -19,7 +19,8 @@ const [recoveredArea, setRecoveredArea] = useState()
 
 const width = windowSize.width*0.8;
 const height = windowSize.height*0.45;
-const margin = {top:30, right: 15, bottom: 20, left: 60}
+const correctionArea = width*0.0022;
+const margin = {top:height*0.05, right: width*0.03, bottom: height*0.05, left: width*0.20}
 
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
@@ -41,6 +42,7 @@ const currentCountry = historical[selected];
        const timeDomainMax = Object.keys(lineData).length-1
 
        const populationDomain = d3.extent(Object.values(lineData))
+       console.log(populationDomain);
 
        let day = 0
        for(let i = 0; i < Object.keys(lineData).length; i++){
@@ -61,15 +63,15 @@ const currentCountry = historical[selected];
        const deathsLineData = lines.slice((lines.length/3), (lines.length/3)*2 )
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
 
-       const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax])
-       const yScale = d3.scaleLinear().range([width/1.52, 0 ]).domain(populationDomain)
+       const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax*1.1])
+       const yScale = d3.scaleLinear().range([height-margin.bottom, 0]).domain([populationDomain[0], populationDomain[1]*1.3])
 
 
 
       const lineGenerator = d3.line().x(d => xScale(d.day))
                                      .y(d => yScale(d.number))
       const area = d3.area().x(d => xScale(d.day))
-                            .y0(height - margin.left - margin.bottom + 5)
+                            .y0(height - margin.bottom)
                             .y1(d => yScale(d.number))
 
       setCasesArea(area(casesLineData))
@@ -100,8 +102,8 @@ const currentCountry = historical[selected];
         <path d={recoveredArea} fill='blue' />
         <path d={deathsArea} fill='red' />
         <g>
-          <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom - margin.left + 5})`} />
-          <g className='yAxis' transform={`translate( ${margin.left} , 0)`} />
+          <g className='xAxis' transform={`translate( 0 , ${height - margin.bottom})`} />
+          <g className='yAxis' transform={`translate( ${margin.left} , ${margin.top - margin.bottom})`} />
         </g>
       </svg>
 
