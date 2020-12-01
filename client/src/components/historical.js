@@ -19,8 +19,8 @@ const [recoveredArea, setRecoveredArea] = useState()
 
 const width = windowSize.width*0.8;
 const height = windowSize.height*0.45;
-const correctionArea = width*0.0022;
-const margin = {top:height*0.05, right: width*0.03, bottom: height*0.05, left: width*0.20}
+// const correctionArea = width*0.0022;
+const margin = {top:height*0.05, right: width*0.03, bottom: height*0.08, left: width*0.20}
 
 //parses country to pass it as filter for historical array
 let selected = historical.findIndex((d) => {
@@ -64,7 +64,7 @@ const currentCountry = historical[selected];
        const recoveredLineData = lines.slice((lines.length/3)*2, lines.length)
 
        const xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([1, timeDomainMax*1.1])
-       const yScale = d3.scaleLinear().range([height-margin.bottom, 0]).domain([populationDomain[0], populationDomain[1]*1.3])
+       const yScale = d3.scaleLinear().range([height-margin.bottom, 20]).domain([populationDomain[0], populationDomain[1]*1.6])
 
 
 

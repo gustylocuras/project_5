@@ -12,6 +12,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* *{
+  border: 1px solid gold;
+} */
 
 /* @media (max-width: 600px) {
   *{
@@ -112,7 +115,22 @@ h3 {
 }
 
 .lines {
-  background: white;
+  margin: 1% 0;
+  background: ghostwhite;
+}
+
+.country-input{
+  width: 40%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  width: 40%;
+}
+
+li {
+  list-style-type: none;
 }
 
 .options {

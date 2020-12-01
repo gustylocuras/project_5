@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 
 function AutoComplete({ historical, getCountry, searchCountry}){
   const [options, setOptions] = useState([])
-
+  console.log(historical);
   const countriesNames = []
 
  for(let country of historical){
-   let countryName = country.country.toLowerCase()
-    countriesNames.push(countryName);
+     let countryName = country.country.toLowerCase()
+      countriesNames.push(countryName);
   }
 
   function getOptions(event){
@@ -16,11 +16,16 @@ function AutoComplete({ historical, getCountry, searchCountry}){
     const list = []
     for(let name of countriesNames){
       if(name.includes(entry)){
-        list.push(name)
+        if(name.length <= 3){
+          list.push(name.toUpperCase())
+        } else {
+            list.push(name)
+        }
       }
     }
+    console.log(list);
     const completeOptions = []
-    if(list.length <= 4){
+    if(list.length <= 40){
       for(let countryName of list){
         let array = countryName.split('')
         let first = array[0].toUpperCase()
@@ -29,11 +34,12 @@ function AutoComplete({ historical, getCountry, searchCountry}){
         completeOptions.push(fileName)
       }
     } setOptions(completeOptions);
+    console.log(completeOptions);
 }
 
   return(
     <React.Fragment>
-      <input onChange={getOptions} type='text' placeholder='Country' /><br/>
+      <input className='country-input' onChange={getOptions} type='text' placeholder='Country' />
       <ul> {options.map((option, key) => {
         return <li onClick={() => {
           getCountry(option)
