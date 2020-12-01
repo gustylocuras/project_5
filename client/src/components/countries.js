@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // import { useQuery } from '@apollo/react-hooks';
 // import gql from 'graphql-tag';
 import Map from './map'
-import geojson from './custom.json'
+// import geojson from './custom.json'
 
 
 
