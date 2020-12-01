@@ -11,16 +11,29 @@ function AutoComplete({ historical, getCountry, searchCountry}){
       countriesNames.push(countryName);
   }
 
+  function findDuplicates(name, arr){
+    let result
+    for(let i = 0; i < arr.length; i++){
+      result = name == arr[i];
+    }
+     return !result ;
+  }
+
   function getOptions(event){
     const entry = event.target.value.toLowerCase()
     const list = []
     for(let name of countriesNames){
       if(name.includes(entry)){
-        if(name.length <= 3){
-          list.push(name.toUpperCase())
-        } else {
-            list.push(name)
+        if(findDuplicates(name, list) == true){
+          if(name.length <= 3){
+
+            list.push(name.toUpperCase())
+          } else {
+
+              list.push(name)
+          }
         }
+
       }
     }
     console.log(list);
