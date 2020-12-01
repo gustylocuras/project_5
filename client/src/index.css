@@ -87,9 +87,9 @@ nav, footer {
 }
 
 h3 {
-  
-  margin-left: 2%;
-
+  width: 20%;
+  text-align: center;
+  margin: 1%;
 }
 
 .title {
@@ -100,10 +100,13 @@ h3 {
 }
 
 .data {
+
   margin: 0;
+
   display: flex;
+
   align-items: center;
-  align-content: space-between;
+  align-content: center;
   width: 100%;
   background: ghostwhite;
 }
@@ -182,8 +185,7 @@ input:checked + .slider:before {
 }
 
 .dash{
-  border: 1px solid gold;
-  padding: 0% 0%;
+  padding: 1% 1%;
   display: flex;
   flex-direction: column;
   margin: 0;
