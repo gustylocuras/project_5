@@ -136,7 +136,7 @@ li {
 .options {
   color: black;
   background:white;
-  z-index: 1;
+  z-index: 3;
 }
 
 /* The switch - the box around the slider */

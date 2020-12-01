@@ -11,7 +11,6 @@ class App extends React.Component {
     return(
       <div className="container">
         <Nav />
-        
         <Query />
         <Footer />
       </div>
