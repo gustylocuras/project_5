@@ -13,7 +13,7 @@ code {
     monospace;
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   *{
     border: 1px solid gold;
   }
@@ -24,7 +24,7 @@ code {
 .svg-map {
   width:90%;
 }
-}
+} */
 select {
   width: 10%;
   margin: 2%;
@@ -87,7 +87,9 @@ nav, footer {
 }
 
 h3 {
+  
   margin-left: 2%;
+
 }
 
 .title {
