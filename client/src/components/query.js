@@ -5,7 +5,7 @@ import Circles from './new_circles'
 import Historical from './historical'
 import AutoComplete from './autocomplete'
 import UseWindowSize from './windowResize'
-
+import Loader from 'react-loader-spinner'
 function Query(){
 
 let windowSize = UseWindowSize()
@@ -60,7 +60,7 @@ function searchCountry(){
 
     `;
     const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
-    if (loading) return 'Loading...';
+    if (loading) return <Loader type="ThreeDots" color="#fdc6af" height={100} width={100} timeout={3000}/>;
     // if (error) console.log(error); return `Error! ${error}`;
 
 
