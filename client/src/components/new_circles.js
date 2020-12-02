@@ -2,13 +2,8 @@ import React, { useEffect, useState} from 'react';
 import * as d3 from 'd3';
 
 
-
 const force = d3.forceSimulation()
 const forceStrength = 0.12
-
-
-
-
 
 
 function Circles ({countries, selection, setSelection, windowSize}){
@@ -32,31 +27,6 @@ function Circles ({countries, selection, setSelection, windowSize}){
    }
  }
 
-  // function getForceCenter(){
-  //   console.log("use the force");
-  //   setForces({
-  //     x: d3.forceX(),
-  //     y: d3.forceY()
-  //   })
-  //
-  // }
-
-  // const pepe = d3.forceX(countries, d =>{
-  //   return projection([d.countryInfo.long, d.countryInfo.lat])
-  // })
-  //   console.log(projection([countries[0].countryInfo.long, countries[0].countryInfo.lat]))
-
-  // function getForceCountries(){
-  //   setForces({
-  //     x: d3.forceX(countries, d =>{
-  //       return projection(d.countryInfo.lat)
-  //     }).strength(forceStrength),
-  //
-  //     y: d3.forceY(countries, d =>{
-  //       return projection(d.countryInfo.long)
-  //     }).strength(forceStrength)
-  //   })
-  // }
 
 useEffect(() => {
 
@@ -65,7 +35,7 @@ useEffect(() => {
   //setup domain for each vriable
     const selectionMinMax = d3.extent(countries, (d) => { return d[feature]})
     const deathsMinMax = d3.extent(countries, (d) => { return d.deaths})
-    console.log(selectionMinMax);
+
 //setup circle scale and color scale
 
   let circleRadiusScale = d3.scaleSqrt().domain(selectionMinMax).range([circleSize.min, circleSize.max]);
@@ -74,12 +44,6 @@ useEffect(() => {
   countries = countries.sort((a, b) =>
     b.cases - a.cases
   )
-
-//setup the svg dimensions
-  // const chart = d3.select('.chart')
-  //   .attr('width', width)
-  //   .attr('height', height);
-
 
 //setup force layout
 if(forces == 'center'){

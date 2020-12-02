@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 
 function AutoComplete({ historical, getCountry, searchCountry}){
   const [options, setOptions] = useState([])
-  console.log(historical);
   const countriesNames = []
 
  for(let country of historical){
@@ -33,10 +32,9 @@ function AutoComplete({ historical, getCountry, searchCountry}){
               list.push(name)
           }
         }
-
       }
     }
-    console.log(list);
+
     const completeOptions = []
     if(list.length <= 40){
       for(let countryName of list){
@@ -47,7 +45,7 @@ function AutoComplete({ historical, getCountry, searchCountry}){
         completeOptions.push(fileName)
       }
     } setOptions(completeOptions);
-    console.log(completeOptions);
+
 }
 
   return(
