@@ -35,15 +35,43 @@ function AutoComplete({ historical, getCountry, searchCountry}){
       }
     }
 
+    Array.prototype.multiIndexOf = function (space) {
+      var indexes = [];
+      for (var i = this.length - 1; i >= 0; i--){
+        if(this[i] === space){
+          indexes.unshift(i)
+        }
+      }
+      return indexes
+    }
+
     const completeOptions = []
+    let letterIndex;
+    let first;
+    let array;
+    let next;
+    let fileName;
     if(list.length <= 40){
       for(let countryName of list){
-        let array = countryName.split('')
-        let first = array[0].toUpperCase()
-         array.shift()
-        let fileName = first.concat(array).replace(/,/g, '')
+        array = countryName.split('')
+        first = array[0].toUpperCase()
+        next = array.multiIndexOf(" ")
+        letterIndex = next.map((item) => {
+          return item+1
+        })
+        for(let i = 0; i < letterIndex.length; i++){
+          array[letterIndex[i]] = array[letterIndex[i]].toUpperCase()
+        }
+        // let second = array.indexOf(" ") + 1
+        // array[second] = array[second].toUpperCase()
+        array.shift()
+
+        fileName = first.concat(array).replace(/,/g, '')
         completeOptions.push(fileName)
       }
+      console.log(next);
+      // console.log(letterIndex);
+      console.log(completeOptions);
     } setOptions(completeOptions);
 
 }

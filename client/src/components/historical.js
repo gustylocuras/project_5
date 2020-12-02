@@ -42,7 +42,7 @@ const currentCountry = historical[selected];
        const timeDomainMax = Object.keys(lineData).length-1
 
        const populationDomain = d3.extent(Object.values(lineData))
-       console.log(populationDomain);
+       
 
        let day = 0
        for(let i = 0; i < Object.keys(lineData).length; i++){
