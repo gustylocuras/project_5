@@ -8,10 +8,6 @@ import * as serviceWorker from './serviceWorker';
 
 
 
-
-
-
-
 ReactDOM.render(
   <ApolloProvider client={connection}>
     <App />
