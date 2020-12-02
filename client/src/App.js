@@ -12,7 +12,7 @@ class App extends React.Component {
       <div className="container">
         <Nav />
         <Query />
-        <Footer />
+        <Footer className="footer-comp" />
       </div>
     )
   }

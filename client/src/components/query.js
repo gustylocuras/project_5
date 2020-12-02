@@ -60,7 +60,7 @@ function searchCountry(){
 
     `;
     const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
-    if (loading) return <Loader type="ThreeDots" color="#fdc6af" height={100} width={100} timeout={3000}/>;
+    if (loading) return <Loader className="spin" type="ThreeDots" color="#fdc6af" height={100} width={100} timeout={3000}/>;
     // if (error) console.log(error); return `Error! ${error}`;
 
 
