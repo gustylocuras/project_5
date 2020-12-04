@@ -149,11 +149,11 @@ if(forces == 'center'){
           <div className="tooltip">
             <h1 className="title">Country name</h1>
             <div className="data">
-            <h3 style={{fontSize: width*0.02}} className="cases">Cases</h3>
-            <h3 style={{fontSize: width*0.02}} className="deaths">Deaths</h3>
-            <h3 style={{fontSize: width*0.02}} className="todayCases">Today's cases</h3>
-            <h3 style={{fontSize: width*0.02}} className="todayDeaths">Today's deaths</h3>
-            <h3 style={{fontSize: width*0.02}} className="tests">Tests</h3>
+            <h3 style={{fontSize: width*0.03}} className="cases">Cases</h3>
+            <h3 style={{fontSize: width*0.03}} className="deaths">Deaths</h3>
+            <h3 style={{fontSize: width*0.03}} className="todayCases">Today's cases</h3>
+            <h3 style={{fontSize: width*0.03}} className="todayDeaths">Today's deaths</h3>
+            <h3 style={{fontSize: width*0.03}} className="tests">Tests</h3>
             </div>
           </div>
         </div>

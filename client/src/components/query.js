@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import Footer from './footer'
 import Circles from './new_circles'
 import Historical from './historical'
 import AutoComplete from './autocomplete'
@@ -60,7 +61,7 @@ function searchCountry(){
 
     `;
     const { loading, error, data } = useQuery(COUNTRIES_QUERY, { errorPolicy: 'all' });
-    if (loading) return <Loader className="spin" type="ThreeDots" color="#fdc6af" height={100} width={100} timeout={3000}/>;
+    if (loading) return <Loader className="spin" type="ThreeDots" color="#fdc6af" height={100} width={100} timeout={10000}/>;
     // if (error) console.log(error); return `Error! ${error}`;
 
 
@@ -69,6 +70,7 @@ return(
     <Circles windowSize={windowSize} selection={selection} setSelection={setSelection} countries={data.countries} />
     <AutoComplete windowSize={windowSize} searchCountry={searchCountry} getCountry={getCountry} historical={data.historical}/>
     <Historical windowSize={windowSize} country={country} historical={data.historical}/>
+    <Footer className="footer-comp" />
   </React.Fragment>
 )
 

@@ -18,7 +18,7 @@ const [deathsArea, setDeathsArea] = useState()
 const [recoveredArea, setRecoveredArea] = useState()
 
 const width = windowSize.width*0.8;
-const height = windowSize.height*0.45;
+const height = windowSize.height*0.30;
 // const correctionArea = width*0.0022;
 const margin = {top:height*0.05, right: width*0.03, bottom: height*0.08, left: width*0.20}
 
@@ -42,7 +42,7 @@ const currentCountry = historical[selected];
        const timeDomainMax = Object.keys(lineData).length-1
 
        const populationDomain = d3.extent(Object.values(lineData))
-       
+
 
        let day = 0
        for(let i = 0; i < Object.keys(lineData).length; i++){
