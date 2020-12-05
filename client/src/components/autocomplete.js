@@ -62,11 +62,9 @@ function AutoComplete({ historical, getCountry, searchCountry}){
         for(let i = 0; i < letterIndex.length; i++){
           array[letterIndex[i]] = array[letterIndex[i]].toUpperCase()
         }
-        // let second = array.indexOf(" ") + 1
-        // array[second] = array[second].toUpperCase()
         array.shift()
 
-        fileName = first.concat(array).replace(/,/g, '')
+        fileName = first.concat(array).replace(/,/g, '').replace(/And/g, 'and').replace(/The/g, 'the')
         completeOptions.push(fileName)
       }
       console.log(next);
